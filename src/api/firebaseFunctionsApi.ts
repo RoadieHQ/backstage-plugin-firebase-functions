@@ -24,6 +24,7 @@ export const firebaseFunctionsApiRef = createApiRef<FirebaseFunctionsApi>({
 });
 
 export type ListFunctionsArgs = {
+  googleIdToken: string;
   project: string;
   authMethod: AuthMethod;
   apiKey: string;

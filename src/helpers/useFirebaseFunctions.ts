@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { useAsyncRetry } from 'react-use';
-import { useApi, errorApiRef } from '@backstage/core';
+import { useApi, googleAuthApiRef, errorApiRef } from '@backstage/core';
 import { FunctionData } from '../types';
 import { firebaseFunctionsApiRef } from '../api';
 import { AuthMethod } from './ContextProvider';
@@ -28,6 +28,7 @@ export function useFirebaseFunctions({
   project: string;
   apiKey: string;
 }) {
+  const googleAuth = useApi(googleAuthApiRef);
   const firebaseFunctionsApi = useApi(firebaseFunctionsApiRef);
   const errorApi = useApi(errorApiRef);
   const { loading, value: functionsData, error, retry } = useAsyncRetry<
@@ -37,10 +38,13 @@ export function useFirebaseFunctions({
     if (!project) {
       return [];
     }
-
+    const googleIdToken = await googleAuth.getAccessToken([
+      'https://www.googleapis.com/auth/cloud-platform',
+    ]);
     try {
       const firebaseFunctions = await firebaseFunctionsApi.listFunctions({
         authMethod,
+        googleIdToken,
         project,
         apiKey,
       });

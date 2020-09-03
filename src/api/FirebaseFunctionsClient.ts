@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-import { useApi, googleAuthApiRef } from '@backstage/core';
 import {
   FirebaseFunctionsApi,
   ListFunctionsArgs,
@@ -42,7 +41,12 @@ async function fetch<T = any>(url: string, init?: RequestInit): Promise<T> {
 }
 
 export class FirebaseFunctionsClient implements FirebaseFunctionsApi {
-  async listFunctions({ project, authMethod, apiKey }: ListFunctionsArgs) {
+  async listFunctions({
+    googleIdToken,
+    project,
+    authMethod,
+    apiKey,
+  }: ListFunctionsArgs) {
     let url = `https://cloudfunctions.googleapis.com/v1/projects/${project}/locations/-/functions?pageSize=20`;
     const init = {
       method: 'get',
@@ -50,10 +54,6 @@ export class FirebaseFunctionsClient implements FirebaseFunctionsApi {
     if (authMethod === 'API_KEY') {
       url += `&key=${apiKey}`;
     } else if (authMethod === 'OAuth2') {
-      const googleAuth = useApi(googleAuthApiRef);
-      const googleIdToken = await googleAuth.getAccessToken([
-        'https://www.googleapis.com/auth/cloud-platform',
-      ]);
       init.headers = new Headers({
         Authorization: `Bearer ${googleIdToken}`,
       });
