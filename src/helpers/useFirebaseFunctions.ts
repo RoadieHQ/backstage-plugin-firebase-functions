@@ -38,9 +38,12 @@ export function useFirebaseFunctions({
     if (!project) {
       return [];
     }
-    const googleIdToken = await googleAuth.getAccessToken([
-      'https://www.googleapis.com/auth/cloud-platform',
-    ]);
+    const googleIdToken =
+      authMethod === 'OAuth2'
+        ? await googleAuth.getAccessToken([
+            'https://www.googleapis.com/auth/cloud-platform',
+          ])
+        : '';
     try {
       const firebaseFunctions = await firebaseFunctionsApi.listFunctions({
         authMethod,
