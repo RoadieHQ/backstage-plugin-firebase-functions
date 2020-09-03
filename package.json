@@ -41,6 +41,8 @@
     "rollup-plugin-peer-deps-external": "^2.2.3"
   },
   "devDependencies": {
+    "@spotify/eslint-config-oss": "^1.0.1",
+    "@spotify/prettier-config": "^8.0.0",
     "@backstage/cli": "^0.1.1-alpha.19",
     "@backstage/dev-utils": "^0.1.1-alpha.19",
     "@rollup/plugin-commonjs": "^14.0.0",
@@ -54,5 +56,20 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "prettier": "@spotify/prettier-config",
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
+  }
 }
