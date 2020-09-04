@@ -54,7 +54,7 @@ export function useFirebaseFunctions({
       return firebaseFunctions.functionData;
     } catch (err) {
       errorApi.post(err);
-      return [];
+      throw new Error(err);
     }
   }, [project]);
 

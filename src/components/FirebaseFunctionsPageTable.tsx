@@ -27,7 +27,7 @@ import { Table, TableColumn } from '@backstage/core';
 import { useFirebaseFunctions } from '../helpers/useFirebaseFunctions';
 import { FunctionData } from '../types';
 import moment from 'moment';
-import { useSettings } from '../helpers/ContextProvider';
+import { useSettings, Settings } from '../helpers/ContextProvider';
 
 const getElapsedTime = (start: string) => {
   return moment(start).fromNow();
@@ -164,6 +164,7 @@ export const FirebaseFunctionsPageTable: React.FC = () => {
         </>
       }
       columns={columnDefinitions}
+      localization={getLocalizationObject(settings, tableProps)}
       detailPanel={(rowData: FunctionData) => {
         return (
           <Box display="flex" p={1}>
@@ -203,3 +204,27 @@ export const FirebaseFunctionsPageTable: React.FC = () => {
     />
   );
 };
+
+function getLocalizationObject(
+  settings: { project: string },
+  tableProps: {
+    readonly loading: boolean;
+    readonly error: Error | undefined;
+  },
+) {
+  const message = !settings.project
+    ? 'Set project name to fetch data'
+    : tableProps.loading
+    ? 'loading'
+    : tableProps.error
+    ? 'error occured while loading data'
+    : undefined;
+
+  return message
+    ? {
+        body: {
+          emptyDataSourceMessage: message,
+        },
+      }
+    : undefined;
+}
