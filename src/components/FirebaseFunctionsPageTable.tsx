@@ -122,7 +122,7 @@ export const FirebaseFunctionsPageTable: React.FC = () => {
   const [pageSize, setPageSize] = useState(5);
   const [filteredRows, setFilteredRows] = useState<FunctionData[]>([]);
   const [settings] = useSettings();
-  const [tableProps] = useFirebaseFunctions({
+  const tableProps = useFirebaseFunctions({
     project: settings.project,
     authMethod: settings.authMethod,
     apiKey: settings.apiKey,

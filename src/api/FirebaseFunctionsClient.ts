@@ -18,7 +18,7 @@ import {
   FirebaseFunctionsApi,
   ListFunctionsArgs,
 } from './firebaseFunctionsApi';
-import { FunctionData } from '../types';
+import { FunctionData, FunctionDataDTO } from '../types';
 
 class FetchError extends Error {
   get name(): string {
@@ -47,25 +47,29 @@ export class FirebaseFunctionsClient implements FirebaseFunctionsApi {
     authMethod,
     apiKey,
   }: ListFunctionsArgs) {
-    let url = `https://cloudfunctions.googleapis.com/v1/projects/${project}/locations/-/functions?pageSize=20`;
+    let url = `https://cloudfunctions.googleapis.com/v1/projects/${project}/locations/-/functions?pageSize=50`;
     const init = {
       method: 'get',
     } as RequestInit;
     if (authMethod === 'API_KEY') {
-      url += `&key=${apiKey}`;
+      url += `&key=${encodeURIComponent(apiKey)}`;
     } else if (authMethod === 'OAuth2') {
       init.headers = new Headers({
         Authorization: `Bearer ${googleIdToken}`,
       });
     }
-    const fetchedData = [] as any[];
+    const fetchedData = [] as FunctionDataDTO[];
     let resp = null;
     do {
-      resp = await fetch<{ functions: FunctionData[]; nextPageToken: string }>(
-        url,
-        init,
-      );
-      fetchedData.push(...resp.functions!);
+      // for subsequent calls include nextPageToken
+      if (resp) {
+        url = url + '?pageToken=$' + encodeURIComponent(resp.nextPageToken);
+      }
+      resp = await fetch<{
+        functions: FunctionDataDTO[];
+        nextPageToken: string;
+      }>(url, init);
+      fetchedData.push(...resp.functions);
     } while (resp && resp.nextPageToken);
 
     const functionData =
