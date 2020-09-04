@@ -58,12 +58,10 @@ export function useFirebaseFunctions({
     }
   }, [project]);
 
-  return [
-    {
-      loading,
-      functionsData,
-      error,
-      retry,
-    },
-  ] as const;
+  return {
+    loading,
+    functionsData,
+    error,
+    retry,
+  };
 }

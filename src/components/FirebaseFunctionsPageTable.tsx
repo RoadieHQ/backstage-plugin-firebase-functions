@@ -118,11 +118,8 @@ const columnDefinitions: TableColumn<FunctionData>[] = [
 ];
 
 export const FirebaseFunctionsPageTable: React.FC = () => {
-  const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(5);
-  const [filteredRows, setFilteredRows] = useState<FunctionData[]>([]);
   const [settings] = useSettings();
-  const [tableProps] = useFirebaseFunctions({
+  const tableProps = useFirebaseFunctions({
     project: settings.project,
     authMethod: settings.authMethod,
     apiKey: settings.apiKey,
@@ -133,28 +130,13 @@ export const FirebaseFunctionsPageTable: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settings.authMethod, settings.project]);
 
-  useEffect(() => {
-    setFilteredRows(
-      tableProps.functionsData?.slice(page * pageSize, (page + 1) * pageSize) ??
-        [],
-    );
-  }, [tableProps.functionsData, page, pageSize]); // eslint-disable-line react-hooks/exhaustive-deps
-
   return (
     <Table
       isLoading={tableProps.loading || tableProps.loading}
       options={{
-        paging: true,
-        pageSize,
-
         padding: 'dense',
-        paginationType: 'normal',
       }}
-      totalCount={tableProps.functionsData?.length ?? 0}
-      page={page}
-      data={filteredRows ?? []}
-      onChangePage={setPage}
-      onChangeRowsPerPage={setPageSize}
+      data={tableProps.functionsData ?? []}
       title={
         <>
           <Box display="flex" alignItems="center">
@@ -165,42 +147,7 @@ export const FirebaseFunctionsPageTable: React.FC = () => {
       }
       columns={columnDefinitions}
       localization={getLocalizationObject(settings, tableProps)}
-      detailPanel={(rowData: FunctionData) => {
-        return (
-          <Box display="flex" p={1}>
-            <Box p={1} maxWidth="50%">
-              <Typography>Env variables:</Typography>
-              <MuiTable size="small" aria-label="env-variables">
-                <TableBody>
-                  {rowData.envVariables
-                    ? Object.entries(rowData.envVariables).map(entry => (
-                        <TableRow key={entry[0]}>
-                          <TableCell>{entry[0]}</TableCell>
-                          <TableCell>{entry[1]}</TableCell>
-                        </TableRow>
-                      ))
-                    : 'no env variables found'}
-                </TableBody>
-              </MuiTable>
-            </Box>
-            <Box p={1} maxWidth="50%">
-              <Typography>labels:</Typography>
-              <MuiTable size="small" aria-label="labels">
-                <TableBody>
-                  {rowData.envVariables
-                    ? Object.entries(rowData.labels).map(entry => (
-                        <TableRow key={entry[0]}>
-                          <TableCell>{entry[0]}</TableCell>
-                          <TableCell>{entry[1]}</TableCell>
-                        </TableRow>
-                      ))
-                    : 'no labels found'}
-                </TableBody>
-              </MuiTable>
-            </Box>
-          </Box>
-        );
-      }}
+      detailPanel={DetailPanel}
     />
   );
 };
@@ -227,4 +174,41 @@ function getLocalizationObject(
         },
       }
     : undefined;
+}
+
+function DetailPanel(rowData: FunctionData) {
+  return (
+    <Box display="flex" p={1}>
+      <Box p={1} maxWidth="50%">
+        <Typography>Env variables:</Typography>
+        <MuiTable size="small" aria-label="env-variables">
+          <TableBody>
+            {rowData.envVariables
+              ? Object.entries(rowData.envVariables).map(entry => (
+                  <TableRow key={entry[0]}>
+                    <TableCell>{entry[0]}</TableCell>
+                    <TableCell>{entry[1]}</TableCell>
+                  </TableRow>
+                ))
+              : 'no env variables found'}
+          </TableBody>
+        </MuiTable>
+      </Box>
+      <Box p={1} maxWidth="50%">
+        <Typography>labels:</Typography>
+        <MuiTable size="small" aria-label="labels">
+          <TableBody>
+            {rowData.envVariables
+              ? Object.entries(rowData.labels).map(entry => (
+                  <TableRow key={entry[0]}>
+                    <TableCell>{entry[0]}</TableCell>
+                    <TableCell>{entry[1]}</TableCell>
+                  </TableRow>
+                ))
+              : 'no labels found'}
+          </TableBody>
+        </MuiTable>
+      </Box>
+    </Box>
+  );
 }

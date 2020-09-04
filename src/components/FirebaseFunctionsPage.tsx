@@ -35,14 +35,14 @@ const FirebaseFunctionsPage: React.FC = () => {
     <ContextProvider>
       <Page theme={pageTheme.tool}>
         <Header
-          title="Firebase functions plugin"
-          subtitle="manage firebase functions"
+          title="Firebase Functions Plugin"
+          subtitle="Manage firebase functions"
         >
-          <HeaderLabel label="Owner" value="Roadie" />
+          <HeaderLabel label="Owner" value="RoadieHQ" />
           <HeaderLabel label="Lifecycle" value="Alpha" />
         </Header>
         <Content>
-          <ContentHeader title="Firebase functions plugin">
+          <ContentHeader title="All Functions">
             <SupportButton>
               Plugin to show a project's firebase functions
             </SupportButton>
