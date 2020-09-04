@@ -38,7 +38,7 @@ const FirebaseFunctionsPage: React.FC = () => {
           title="Firebase Functions Plugin"
           subtitle="Manage firebase functions"
         >
-          <HeaderLabel label="Owner" value="Roadie" />
+          <HeaderLabel label="Owner" value="RoadieHQ" />
           <HeaderLabel label="Lifecycle" value="Alpha" />
         </Header>
         <Content>
