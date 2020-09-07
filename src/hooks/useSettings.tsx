@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import React from 'react';
-import { StateContext } from './ContextProvider';
+import { StateContext } from '../components/ContextProvider';
 
 export const useSettings = () => {
   const context = React.useContext(StateContext);

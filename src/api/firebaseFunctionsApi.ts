@@ -16,7 +16,7 @@
 
 import { createApiRef } from '@backstage/core';
 import { FunctionData } from '../types';
-import { AuthMethod } from '../helpers/ContextProvider';
+import { AuthMethod } from '../components/ContextProvider';
 
 export const firebaseFunctionsApiRef = createApiRef<FirebaseFunctionsApi>({
   id: 'plugin.firebasefunctions.service',

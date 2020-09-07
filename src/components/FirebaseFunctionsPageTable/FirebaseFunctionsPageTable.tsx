@@ -24,10 +24,10 @@ import {
   TableBody,
 } from '@material-ui/core';
 import { Table, TableColumn } from '@backstage/core';
-import { useFirebaseFunctions } from '../helpers/useFirebaseFunctions';
-import { FunctionData } from '../types';
+import { useFirebaseFunctions } from '../../hooks/useFirebaseFunctions';
+import { FunctionData } from '../../types';
 import moment from 'moment';
-import { useSettings } from '../helpers/useSettings';
+import { useSettings } from '../../hooks/useSettings';
 
 const getElapsedTime = (start: string) => {
   return moment(start).fromNow();

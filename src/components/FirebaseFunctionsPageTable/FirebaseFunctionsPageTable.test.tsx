@@ -16,17 +16,17 @@
 
 import React from 'react';
 import { render } from '@testing-library/react';
-import { FirebaseFunctionsPageTable } from './FirebaseFunctionsPageTable';
-import { ContextProvider, Settings } from '../helpers/ContextProvider';
+import { FirebaseFunctionsPageTable } from '.';
+import { ContextProvider, Settings } from '../ContextProvider';
 import {
   googleAuthApiRef,
   errorApiRef,
   ApiRegistry,
   ApiProvider,
 } from '@backstage/core';
-import { firebaseFunctionsApiRef } from '../api';
-import { useSettings } from '../helpers/useSettings';
-import { useFirebaseFunctions } from '../helpers/useFirebaseFunctions';
+import { firebaseFunctionsApiRef } from '../../api';
+import { useSettings } from '../../hooks/useSettings';
+import { useFirebaseFunctions } from '../../hooks/useFirebaseFunctions';
 jest.mock('../helpers/useSettings');
 jest.mock('../helpers/useFirebaseFunctions');
 

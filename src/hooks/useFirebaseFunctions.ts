@@ -17,7 +17,7 @@ import { useAsyncRetry } from 'react-use';
 import { useApi, googleAuthApiRef, errorApiRef } from '@backstage/core';
 import { FunctionData } from '../types';
 import { firebaseFunctionsApiRef } from '../api';
-import { AuthMethod } from './ContextProvider';
+import { AuthMethod } from '../components/ContextProvider';
 
 export function useFirebaseFunctions({
   authMethod,

@@ -28,7 +28,7 @@ import {
 
 import { FirebaseFunctionsPageTable } from './FirebaseFunctionsPageTable';
 import Settings from './Settings';
-import { ContextProvider } from '../helpers/ContextProvider';
+import { ContextProvider } from './ContextProvider';
 
 const FirebaseFunctionsPage: React.FC = () => {
   return (

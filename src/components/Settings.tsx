@@ -33,8 +33,8 @@ import {
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Alert } from '@material-ui/lab';
-import { AuthMethod } from '../helpers/ContextProvider';
-import { useSettings } from '../helpers/useSettings';
+import { AuthMethod } from './ContextProvider';
+import { useSettings } from '../hooks/useSettings';
 
 const useStyles = makeStyles(theme => ({
   tabPanelRoot: {
