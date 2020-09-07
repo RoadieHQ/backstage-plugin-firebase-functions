@@ -22,12 +22,22 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  Select,
+  MenuItem,
+  Input,
+  FormControl,
+  InputLabel,
+  CircularProgress,
+  Checkbox,
+  ListItemText,
 } from '@material-ui/core';
 import { Table, TableColumn } from '@backstage/core';
 import { useFirebaseFunctions } from '../../hooks/useFirebaseFunctions';
 import { FunctionData } from '../../types';
 import moment from 'moment';
 import { useSettings } from '../../hooks/useSettings';
+import { useProjectIds } from '../../hooks/useProjectIds';
+import { Settings } from '../ContextProvider';
 
 const getElapsedTime = (start: string) => {
   return moment(start).fromNow();
@@ -49,6 +59,15 @@ const columnDefinitions: TableColumn<FunctionData>[] = [
         </Box>
       );
     },
+  },
+  {
+    title: 'Project',
+    field: 'project',
+    render: (row: Partial<FunctionData>) => (
+      <Typography variant="body2" noWrap>
+        {row.project!}
+      </Typography>
+    ),
   },
   {
     title: 'Status',
@@ -118,9 +137,11 @@ const columnDefinitions: TableColumn<FunctionData>[] = [
 ];
 
 export const FirebaseFunctionsPageTable: React.FC = () => {
-  const [settings] = useSettings();
+  const [settings, setSettings] = useSettings();
+  const { value, loading, error } = useProjectIds();
   const tableProps = useFirebaseFunctions({
-    project: settings.project,
+    //TODO: Modify useFirebaseFunctions to fetch data for multiple projects
+    project: settings.projects[0],
     authMethod: settings.authMethod,
     apiKey: settings.apiKey,
   });
@@ -128,7 +149,11 @@ export const FirebaseFunctionsPageTable: React.FC = () => {
   useEffect(() => {
     tableProps.retry();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [settings.authMethod, settings.project]);
+  }, [settings.authMethod, settings.projects]);
+
+  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setSettings({ ...settings, projects: event.target.value as string[] });
+  };
 
   return (
     <Table
@@ -138,9 +163,32 @@ export const FirebaseFunctionsPageTable: React.FC = () => {
       }}
       data={tableProps.functionsData ?? []}
       title={
-        <Typography variant="h6" component="p">
-          {settings.project}
-        </Typography>
+        <FormControl>
+          <InputLabel id="project-ids-label">Select projects</InputLabel>
+          {loading ? (
+            <CircularProgress />
+          ) : error ? (
+            'Error occured while loading available projects'
+          ) : (
+            <Select
+              style={{ minWidth: '150px' }}
+              labelId="project-ids-label"
+              id="project-ids"
+              multiple
+              renderValue={selected => (selected as string[]).join(', ')}
+              value={settings.projects}
+              onChange={handleChange}
+              input={<Input />}
+            >
+              {value?.map(name => (
+                <MenuItem key={name} value={name}>
+                  <Checkbox checked={settings.projects.indexOf(name) > -1} />
+                  <ListItemText primary={name} />
+                </MenuItem>
+              ))}
+            </Select>
+          )}
+        </FormControl>
       }
       columns={columnDefinitions}
       localization={getLocalizationObject(settings, tableProps)}
@@ -150,13 +198,13 @@ export const FirebaseFunctionsPageTable: React.FC = () => {
 };
 
 function getLocalizationObject(
-  settings: { project: string },
+  settings: Settings,
   tableProps: {
     readonly loading: boolean;
     readonly error: Error | undefined;
   },
 ) {
-  const message = !settings.project
+  const message = !settings.projects
     ? 'Set project name to fetch data'
     : tableProps.loading
     ? 'loading'

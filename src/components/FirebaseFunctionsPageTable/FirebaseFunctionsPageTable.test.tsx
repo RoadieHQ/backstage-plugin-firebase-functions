@@ -27,8 +27,8 @@ import {
 import { firebaseFunctionsApiRef } from '../../api';
 import { useSettings } from '../../hooks/useSettings';
 import { useFirebaseFunctions } from '../../hooks/useFirebaseFunctions';
-jest.mock('../helpers/useSettings');
-jest.mock('../helpers/useFirebaseFunctions');
+jest.mock('../../hooks/useSettings');
+jest.mock('../../hooks/useFirebaseFunctions');
 
 describe('FirebaseFunctionsTable', () => {
   it('should inform about project name not set and not call an api', async () => {
@@ -39,7 +39,7 @@ describe('FirebaseFunctionsTable', () => {
     ]);
     (useSettings as any).mockReturnValue([
       {
-        project: '',
+        projects: [],
         authMethod: 'OAuth2',
         apiKey: '',
       } as Settings,
@@ -68,7 +68,7 @@ describe('FirebaseFunctionsTable', () => {
     ]);
     (useSettings as any).mockReturnValue([
       {
-        project: 'test-project',
+        projects: ['test-project'],
         authMethod: 'OAuth2',
         apiKey: '',
       } as Settings,

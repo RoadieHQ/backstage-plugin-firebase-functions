@@ -50,7 +50,6 @@ const Settings: React.FC = () => {
 
   const [apiKey, setApiKey] = useState(settings.apiKey);
   const [authMethod, setAuthMethod] = useState(settings.authMethod);
-  const [project, setProject] = useState(settings.project);
 
   const [saved, setSaved] = useState(false);
 
@@ -74,13 +73,6 @@ const Settings: React.FC = () => {
         </AccordionSummary>
         <AccordionDetails>
           <div className={classes.tabPanelRoot}>
-            <TextField
-              name="project"
-              label="Firebase project name"
-              value={project}
-              onChange={(e: any) => setProject(e.target.value)}
-              fullWidth
-            />
             <FormControl component="fieldset">
               <FormLabel component="legend">Authentication method</FormLabel>
               <RadioGroup
@@ -124,9 +116,9 @@ const Settings: React.FC = () => {
                 onClick={() => {
                   setSaved(true);
                   saveSettings({
+                    ...settings,
                     apiKey,
                     authMethod,
-                    project,
                   });
                 }}
               >
