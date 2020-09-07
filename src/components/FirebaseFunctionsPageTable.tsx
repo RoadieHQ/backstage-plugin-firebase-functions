@@ -137,7 +137,11 @@ export const FirebaseFunctionsPageTable: React.FC = () => {
         padding: 'dense',
       }}
       data={tableProps.functionsData ?? []}
-      title={<Typography variant="h5">{settings.project}</Typography>}
+      title={
+        <Typography variant="h6" component="p">
+          {settings.project}
+        </Typography>
+      }
       columns={columnDefinitions}
       localization={getLocalizationObject(settings, tableProps)}
       detailPanel={DetailPanel}
