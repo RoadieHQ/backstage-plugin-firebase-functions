@@ -33,7 +33,8 @@ import {
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Alert } from '@material-ui/lab';
-import { useSettings, AuthMethod } from '../helpers/ContextProvider';
+import { AuthMethod } from '../helpers/ContextProvider';
+import { useSettings } from '../helpers/useSettings';
 
 const useStyles = makeStyles(theme => ({
   tabPanelRoot: {
@@ -72,12 +73,12 @@ const Settings: React.FC = () => {
           <Typography>Settings</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Box className={classes.tabPanelRoot}>
+          <div className={classes.tabPanelRoot}>
             <TextField
               name="project"
               label="Firebase project name"
               value={project}
-              onChange={e => setProject(e.target.value)}
+              onChange={(e: any) => setProject(e.target.value)}
               fullWidth
             />
             <FormControl component="fieldset">
@@ -113,7 +114,7 @@ const Settings: React.FC = () => {
                 fullWidth
                 label="Google api key"
                 value={apiKey}
-                onChange={e => setApiKey(e.target.value)}
+                onChange={(e: any) => setApiKey(e.target.value)}
               />
             </Collapse>
             <Box mt={6}>
@@ -132,7 +133,7 @@ const Settings: React.FC = () => {
                 Save settings
               </Button>
             </Box>
-          </Box>
+          </div>
         </AccordionDetails>
       </Accordion>
     </>

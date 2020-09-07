@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Typography,
   Box,
@@ -27,7 +27,7 @@ import { Table, TableColumn } from '@backstage/core';
 import { useFirebaseFunctions } from '../helpers/useFirebaseFunctions';
 import { FunctionData } from '../types';
 import moment from 'moment';
-import { useSettings, Settings } from '../helpers/ContextProvider';
+import { useSettings } from '../helpers/useSettings';
 
 const getElapsedTime = (start: string) => {
   return moment(start).fromNow();
@@ -137,14 +137,7 @@ export const FirebaseFunctionsPageTable: React.FC = () => {
         padding: 'dense',
       }}
       data={tableProps.functionsData ?? []}
-      title={
-        <>
-          <Box display="flex" alignItems="center">
-            <Box mr={1} />
-            <Typography variant="h6">{settings.project}</Typography>
-          </Box>
-        </>
-      }
+      title={<Typography variant="h5">{settings.project}</Typography>}
       columns={columnDefinitions}
       localization={getLocalizationObject(settings, tableProps)}
       detailPanel={DetailPanel}

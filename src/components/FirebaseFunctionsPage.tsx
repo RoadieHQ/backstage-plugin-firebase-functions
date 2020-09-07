@@ -51,7 +51,6 @@ const FirebaseFunctionsPage: React.FC = () => {
             <Grid item>
               <Settings />
             </Grid>
-
             <Grid item>
               <FirebaseFunctionsPageTable />
             </Grid>

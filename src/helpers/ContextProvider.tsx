@@ -25,7 +25,7 @@ export type Settings = {
   apiKey: string;
 };
 
-const StateContext = React.createContext<
+export const StateContext = React.createContext<
   [Settings, React.Dispatch<React.SetStateAction<Settings | undefined>>]
 >([] as any);
 const STORAGE_KEY = `${firebaseFunctionsApiRef.id}.settings`;
@@ -47,12 +47,4 @@ export const ContextProvider: React.FC = ({ children }) => {
       <>{children}</>
     </StateContext.Provider>
   );
-};
-
-export const useSettings = () => {
-  const context = React.useContext(StateContext);
-  if (context === undefined) {
-    throw new Error("You must use 'useSettings' hook inside ContextProvider");
-  }
-  return context;
 };
