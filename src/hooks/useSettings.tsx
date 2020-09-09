@@ -13,26 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import React from 'react';
+import { StateContext } from '../components/ContextProvider';
 
-import { createApiRef } from '@backstage/core';
-import { FunctionData } from '../types';
-
-export const firebaseFunctionsApiRef = createApiRef<FirebaseFunctionsApi>({
-  id: 'plugin.firebasefunctions.service',
-  description: 'Used by the firebase functions plugin to make requests',
-});
-
-export type ListFunctionsArgs = {
-  googleIdToken: string;
-  projects: string[];
-};
-
-export type ListFunctionsType = (
-  input: ListFunctionsArgs,
-) => Promise<{
-  functionData: FunctionData[];
-}>;
-
-export type FirebaseFunctionsApi = {
-  listFunctions: ListFunctionsType;
+export const useSettings = () => {
+  const context = React.useContext(StateContext);
+  if (context === undefined) {
+    throw new Error("You must use 'useSettings' hook inside ContextProvider");
+  }
+  return context;
 };

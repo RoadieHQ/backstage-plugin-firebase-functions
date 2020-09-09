@@ -17,23 +17,17 @@ import React from 'react';
 import { firebaseFunctionsApiRef } from '../api';
 import { useLocalStorage } from 'react-use';
 
-export type AuthMethod = 'OAuth2' | 'API_KEY';
-
 export type Settings = {
-  project: string;
-  authMethod: AuthMethod;
-  apiKey: string;
+  projects: string[];
 };
 
-const StateContext = React.createContext<
+export const StateContext = React.createContext<
   [Settings, React.Dispatch<React.SetStateAction<Settings | undefined>>]
 >([] as any);
 const STORAGE_KEY = `${firebaseFunctionsApiRef.id}.settings`;
 
 const initialState: Settings = {
-  project: '',
-  authMethod: 'OAuth2',
-  apiKey: '',
+  projects: [],
 };
 
 export const ContextProvider: React.FC = ({ children }) => {
@@ -47,12 +41,4 @@ export const ContextProvider: React.FC = ({ children }) => {
       <>{children}</>
     </StateContext.Provider>
   );
-};
-
-export const useSettings = () => {
-  const context = React.useContext(StateContext);
-  if (context === undefined) {
-    throw new Error("You must use 'useSettings' hook inside ContextProvider");
-  }
-  return context;
 };

@@ -28,7 +28,7 @@ import {
 
 import { FirebaseFunctionsPageTable } from './FirebaseFunctionsPageTable';
 import Settings from './Settings';
-import { ContextProvider } from '../helpers/ContextProvider';
+import { ContextProvider } from './ContextProvider';
 
 const FirebaseFunctionsPage: React.FC = () => {
   return (
@@ -48,10 +48,6 @@ const FirebaseFunctionsPage: React.FC = () => {
             </SupportButton>
           </ContentHeader>
           <Grid container spacing={3} direction="column">
-            <Grid item>
-              <Settings />
-            </Grid>
-
             <Grid item>
               <FirebaseFunctionsPageTable />
             </Grid>

@@ -17,17 +17,8 @@ import { useAsyncRetry } from 'react-use';
 import { useApi, googleAuthApiRef, errorApiRef } from '@backstage/core';
 import { FunctionData } from '../types';
 import { firebaseFunctionsApiRef } from '../api';
-import { AuthMethod } from './ContextProvider';
 
-export function useFirebaseFunctions({
-  authMethod,
-  project,
-  apiKey,
-}: {
-  authMethod: AuthMethod;
-  project: string;
-  apiKey: string;
-}) {
+export function useFirebaseFunctions(projects: string[]) {
   const googleAuth = useApi(googleAuthApiRef);
   const firebaseFunctionsApi = useApi(firebaseFunctionsApiRef);
   const errorApi = useApi(errorApiRef);
@@ -35,7 +26,7 @@ export function useFirebaseFunctions({
     FunctionData[]
   >(async () => {
     // TODO: handle message about wrong project name
-    if (!project) {
+    if (!projects) {
       return [];
     }
     const googleIdToken = await googleAuth.getAccessToken([
@@ -43,17 +34,15 @@ export function useFirebaseFunctions({
     ]);
     try {
       const firebaseFunctions = await firebaseFunctionsApi.listFunctions({
-        authMethod,
         googleIdToken,
-        project,
-        apiKey,
+        projects,
       });
       return firebaseFunctions.functionData;
     } catch (err) {
       errorApi.post(err);
-      return [];
+      throw new Error(err);
     }
-  }, [project]);
+  }, [projects]);
 
   return {
     loading,

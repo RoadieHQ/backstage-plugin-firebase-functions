@@ -41,53 +41,51 @@ async function fetch<T = any>(url: string, init?: RequestInit): Promise<T> {
 }
 
 export class FirebaseFunctionsClient implements FirebaseFunctionsApi {
-  async listFunctions({
-    googleIdToken,
-    project,
-    authMethod,
-    apiKey,
-  }: ListFunctionsArgs) {
-    let url = `https://cloudfunctions.googleapis.com/v1/projects/${project}/locations/-/functions?pageSize=50`;
-    const init = {
-      method: 'get',
-    } as RequestInit;
-    if (authMethod === 'API_KEY') {
-      url += `&key=${encodeURIComponent(apiKey)}`;
-    } else if (authMethod === 'OAuth2') {
+  async listFunctions({ googleIdToken, projects }: ListFunctionsArgs) {
+    let functionData: FunctionData[] = [];
+    //Fetch data for each of selected projects
+    for (let i = 0; i < projects.length; i++) {
+      const project = projects[i];
+
+      let url = `https://cloudfunctions.googleapis.com/v1/projects/${project}/locations/-/functions?pageSize=50`;
+      const init = {
+        method: 'get',
+      } as RequestInit;
       init.headers = new Headers({
         Authorization: `Bearer ${googleIdToken}`,
       });
-    }
-    const fetchedData = [] as FunctionDataDTO[];
-    let resp = null;
-    do {
-      // for subsequent calls include nextPageToken
-      if (resp) {
-        url = url + '?pageToken=$' + encodeURIComponent(resp.nextPageToken);
-      }
-      resp = await fetch<{
-        functions: FunctionDataDTO[];
-        nextPageToken: string;
-      }>(url, init);
-      fetchedData.push(...resp.functions);
-    } while (resp && resp.nextPageToken);
+      const fetchedData = [] as FunctionDataDTO[];
+      let resp = null;
+      do {
+        // for subsequent calls include nextPageToken
+        if (resp) {
+          url = url + '?pageToken=$' + encodeURIComponent(resp.nextPageToken);
+        }
+        resp = await fetch<{
+          functions: FunctionDataDTO[];
+          nextPageToken: string;
+        }>(url, init);
+        fetchedData.push(...resp.functions);
+      } while (resp && resp.nextPageToken);
 
-    const functionData =
-      fetchedData.map(
-        (r: any) =>
-          ({
-            name: r.name.split('/').pop(),
-            urlTrigger: r.httpsTrigger!.url,
-            status: r.status,
-            updateTime: r.updateTime,
-            runtime: r.runtime,
-            availableMemoryMb: r.availableMemoryMb,
-            project: project,
-            region: r.name.split('/').slice(-3)[0],
-            labels: r.labels,
-            envVariables: r.environmentVariables,
-          } as FunctionData),
-      ) || [];
+      functionData = functionData.concat(
+        fetchedData.map(
+          (r: any) =>
+            ({
+              name: r.name.split('/').pop(),
+              urlTrigger: r.httpsTrigger!.url,
+              status: r.status,
+              updateTime: r.updateTime,
+              runtime: r.runtime,
+              availableMemoryMb: r.availableMemoryMb,
+              project: project,
+              region: r.name.split('/').slice(-3)[0],
+              labels: r.labels,
+              envVariables: r.environmentVariables,
+            } as FunctionData),
+        ),
+      );
+    }
     return { functionData };
   }
 }

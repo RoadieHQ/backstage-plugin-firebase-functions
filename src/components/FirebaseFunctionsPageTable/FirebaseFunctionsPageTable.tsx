@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Typography,
   Box,
@@ -22,12 +22,22 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  Select,
+  MenuItem,
+  Input,
+  FormControl,
+  InputLabel,
+  CircularProgress,
+  Checkbox,
+  ListItemText,
 } from '@material-ui/core';
 import { Table, TableColumn } from '@backstage/core';
-import { useFirebaseFunctions } from '../helpers/useFirebaseFunctions';
-import { FunctionData } from '../types';
+import { useFirebaseFunctions } from '../../hooks/useFirebaseFunctions';
+import { FunctionData } from '../../types';
 import moment from 'moment';
-import { useSettings } from '../helpers/ContextProvider';
+import { useSettings } from '../../hooks/useSettings';
+import { useProjectIds } from '../../hooks/useProjectIds';
+import { Settings } from '../ContextProvider';
 
 const getElapsedTime = (start: string) => {
   return moment(start).fromNow();
@@ -49,6 +59,15 @@ const columnDefinitions: TableColumn<FunctionData>[] = [
         </Box>
       );
     },
+  },
+  {
+    title: 'Project',
+    field: 'project',
+    render: (row: Partial<FunctionData>) => (
+      <Typography variant="body2" noWrap>
+        {row.project!}
+      </Typography>
+    ),
   },
   {
     title: 'Status',
@@ -118,17 +137,18 @@ const columnDefinitions: TableColumn<FunctionData>[] = [
 ];
 
 export const FirebaseFunctionsPageTable: React.FC = () => {
-  const [settings] = useSettings();
-  const tableProps = useFirebaseFunctions({
-    project: settings.project,
-    authMethod: settings.authMethod,
-    apiKey: settings.apiKey,
-  });
+  const [settings, setSettings] = useSettings();
+  const { value: availableProjects, loading, error } = useProjectIds();
+  const tableProps = useFirebaseFunctions(settings.projects);
 
   useEffect(() => {
     tableProps.retry();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [settings.authMethod, settings.project]);
+  }, [settings.projects]);
+
+  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setSettings({ projects: event.target.value as string[] });
+  };
 
   return (
     <Table
@@ -138,18 +158,65 @@ export const FirebaseFunctionsPageTable: React.FC = () => {
       }}
       data={tableProps.functionsData ?? []}
       title={
-        <>
-          <Box display="flex" alignItems="center">
-            <Box mr={1} />
-            <Typography variant="h6">{settings.project}</Typography>
-          </Box>
-        </>
+        loading ? (
+          <CircularProgress />
+        ) : error ? (
+          <Typography>
+            {'Error occured while loading available projects: ' + error}
+          </Typography>
+        ) : (
+          <FormControl>
+            <InputLabel id="project-ids-label">Select projects</InputLabel>
+            <Select
+              style={{ minWidth: '150px' }}
+              labelId="project-ids-label"
+              id="project-ids"
+              multiple
+              renderValue={selected => (selected as string[]).join(', ')}
+              value={settings.projects}
+              onChange={handleChange}
+              input={<Input />}
+            >
+              {availableProjects?.map(name => (
+                <MenuItem key={name} value={name}>
+                  <Checkbox checked={settings.projects.indexOf(name) > -1} />
+                  <ListItemText primary={name} />
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        )
       }
       columns={columnDefinitions}
+      localization={getLocalizationObject(settings, tableProps)}
       detailPanel={DetailPanel}
     />
   );
 };
+
+function getLocalizationObject(
+  settings: Settings,
+  tableProps: {
+    readonly loading: boolean;
+    readonly error: Error | undefined;
+  },
+) {
+  const message = !settings.projects
+    ? 'Select projects to fetch data'
+    : tableProps.loading
+    ? 'loading'
+    : tableProps.error
+    ? 'error occured while loading data'
+    : undefined;
+
+  return message
+    ? {
+        body: {
+          emptyDataSourceMessage: message,
+        },
+      }
+    : undefined;
+}
 
 function DetailPanel(rowData: FunctionData) {
   return (
