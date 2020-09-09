@@ -41,23 +41,14 @@ async function fetch<T = any>(url: string, init?: RequestInit): Promise<T> {
 }
 
 export class FirebaseFunctionsClient implements FirebaseFunctionsApi {
-  async listFunctions({
-    googleIdToken,
-    project,
-    authMethod,
-    apiKey,
-  }: ListFunctionsArgs) {
+  async listFunctions({ googleIdToken, project }: ListFunctionsArgs) {
     let url = `https://cloudfunctions.googleapis.com/v1/projects/${project}/locations/-/functions?pageSize=50`;
     const init = {
       method: 'get',
     } as RequestInit;
-    if (authMethod === 'API_KEY') {
-      url += `&key=${encodeURIComponent(apiKey)}`;
-    } else if (authMethod === 'OAuth2') {
-      init.headers = new Headers({
-        Authorization: `Bearer ${googleIdToken}`,
-      });
-    }
+    init.headers = new Headers({
+      Authorization: `Bearer ${googleIdToken}`,
+    });
     const fetchedData = [] as FunctionDataDTO[];
     let resp = null;
     do {

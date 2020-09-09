@@ -17,17 +17,8 @@ import { useAsyncRetry } from 'react-use';
 import { useApi, googleAuthApiRef, errorApiRef } from '@backstage/core';
 import { FunctionData } from '../types';
 import { firebaseFunctionsApiRef } from '../api';
-import { AuthMethod } from '../components/ContextProvider';
 
-export function useFirebaseFunctions({
-  authMethod,
-  project,
-  apiKey,
-}: {
-  authMethod: AuthMethod;
-  project: string;
-  apiKey: string;
-}) {
+export function useFirebaseFunctions({ project }: { project: string }) {
   const googleAuth = useApi(googleAuthApiRef);
   const firebaseFunctionsApi = useApi(firebaseFunctionsApiRef);
   const errorApi = useApi(errorApiRef);
@@ -38,18 +29,13 @@ export function useFirebaseFunctions({
     if (!project) {
       return [];
     }
-    const googleIdToken =
-      authMethod === 'OAuth2'
-        ? await googleAuth.getAccessToken([
-            'https://www.googleapis.com/auth/cloud-platform',
-          ])
-        : '';
+    const googleIdToken = await googleAuth.getAccessToken([
+      'https://www.googleapis.com/auth/cloud-platform',
+    ]);
     try {
       const firebaseFunctions = await firebaseFunctionsApi.listFunctions({
-        authMethod,
         googleIdToken,
         project,
-        apiKey,
       });
       return firebaseFunctions.functionData;
     } catch (err) {

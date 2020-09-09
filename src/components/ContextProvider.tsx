@@ -17,12 +17,8 @@ import React from 'react';
 import { firebaseFunctionsApiRef } from '../api';
 import { useLocalStorage } from 'react-use';
 
-export type AuthMethod = 'OAuth2' | 'API_KEY';
-
 export type Settings = {
   projects: string[];
-  authMethod: AuthMethod;
-  apiKey: string;
 };
 
 export const StateContext = React.createContext<
@@ -32,8 +28,6 @@ const STORAGE_KEY = `${firebaseFunctionsApiRef.id}.settings`;
 
 const initialState: Settings = {
   projects: [],
-  authMethod: 'OAuth2',
-  apiKey: '',
 };
 
 export const ContextProvider: React.FC = ({ children }) => {

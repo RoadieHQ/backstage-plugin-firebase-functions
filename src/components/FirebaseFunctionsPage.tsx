@@ -49,9 +49,6 @@ const FirebaseFunctionsPage: React.FC = () => {
           </ContentHeader>
           <Grid container spacing={3} direction="column">
             <Grid item>
-              <Settings />
-            </Grid>
-            <Grid item>
               <FirebaseFunctionsPageTable />
             </Grid>
           </Grid>

@@ -22,18 +22,10 @@ import {
   Box,
   Snackbar,
   Button,
-  TextField,
   makeStyles,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  Collapse,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Alert } from '@material-ui/lab';
-import { AuthMethod } from './ContextProvider';
 import { useSettings } from '../hooks/useSettings';
 
 const useStyles = makeStyles(theme => ({
@@ -47,10 +39,6 @@ const useStyles = makeStyles(theme => ({
 const Settings: React.FC = () => {
   const classes = useStyles();
   const [settings, saveSettings] = useSettings();
-
-  const [apiKey, setApiKey] = useState(settings.apiKey);
-  const [authMethod, setAuthMethod] = useState(settings.authMethod);
-
   const [saved, setSaved] = useState(false);
 
   return (
@@ -73,42 +61,6 @@ const Settings: React.FC = () => {
         </AccordionSummary>
         <AccordionDetails>
           <div className={classes.tabPanelRoot}>
-            <FormControl component="fieldset">
-              <FormLabel component="legend">Authentication method</FormLabel>
-              <RadioGroup
-                row
-                aria-label="Authentication-method"
-                name="AuthenticationMethod"
-                value={authMethod}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setAuthMethod(
-                    (event.target as HTMLInputElement).value as AuthMethod,
-                  );
-                }}
-              >
-                <FormControlLabel
-                  labelPlacement="end"
-                  value="OAuth2"
-                  control={<Radio color="primary" />}
-                  label="OAuth2"
-                />
-                <FormControlLabel
-                  labelPlacement="end"
-                  value="API_KEY"
-                  control={<Radio color="primary" />}
-                  label="Api key"
-                />
-              </RadioGroup>
-            </FormControl>
-            <Collapse in={authMethod === 'API_KEY'} style={{ marginTop: 0 }}>
-              <TextField
-                name="apiKey"
-                fullWidth
-                label="Google api key"
-                value={apiKey}
-                onChange={(e: any) => setApiKey(e.target.value)}
-              />
-            </Collapse>
             <Box mt={6}>
               <Button
                 variant="contained"
@@ -117,8 +69,6 @@ const Settings: React.FC = () => {
                   setSaved(true);
                   saveSettings({
                     ...settings,
-                    apiKey,
-                    authMethod,
                   });
                 }}
               >

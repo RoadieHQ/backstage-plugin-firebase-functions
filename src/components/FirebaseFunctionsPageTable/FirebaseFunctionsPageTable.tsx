@@ -138,21 +138,19 @@ const columnDefinitions: TableColumn<FunctionData>[] = [
 
 export const FirebaseFunctionsPageTable: React.FC = () => {
   const [settings, setSettings] = useSettings();
-  const { value, loading, error } = useProjectIds();
+  const { value: availableProjects, loading, error } = useProjectIds();
   const tableProps = useFirebaseFunctions({
     //TODO: Modify useFirebaseFunctions to fetch data for multiple projects
     project: settings.projects[0],
-    authMethod: settings.authMethod,
-    apiKey: settings.apiKey,
   });
 
   useEffect(() => {
     tableProps.retry();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [settings.authMethod, settings.projects]);
+  }, [settings.projects]);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setSettings({ ...settings, projects: event.target.value as string[] });
+    setSettings({ projects: event.target.value as string[] });
   };
 
   return (
@@ -163,13 +161,15 @@ export const FirebaseFunctionsPageTable: React.FC = () => {
       }}
       data={tableProps.functionsData ?? []}
       title={
-        <FormControl>
-          <InputLabel id="project-ids-label">Select projects</InputLabel>
-          {loading ? (
-            <CircularProgress />
-          ) : error ? (
-            'Error occured while loading available projects'
-          ) : (
+        loading ? (
+          <CircularProgress />
+        ) : error ? (
+          <Typography>
+            {'Error occured while loading available projects: ' + error}
+          </Typography>
+        ) : (
+          <FormControl>
+            <InputLabel id="project-ids-label">Select projects</InputLabel>
             <Select
               style={{ minWidth: '150px' }}
               labelId="project-ids-label"
@@ -180,15 +180,15 @@ export const FirebaseFunctionsPageTable: React.FC = () => {
               onChange={handleChange}
               input={<Input />}
             >
-              {value?.map(name => (
+              {availableProjects?.map(name => (
                 <MenuItem key={name} value={name}>
                   <Checkbox checked={settings.projects.indexOf(name) > -1} />
                   <ListItemText primary={name} />
                 </MenuItem>
               ))}
             </Select>
-          )}
-        </FormControl>
+          </FormControl>
+        )
       }
       columns={columnDefinitions}
       localization={getLocalizationObject(settings, tableProps)}
@@ -205,7 +205,7 @@ function getLocalizationObject(
   },
 ) {
   const message = !settings.projects
-    ? 'Set project name to fetch data'
+    ? 'Select projects to fetch data'
     : tableProps.loading
     ? 'loading'
     : tableProps.error
