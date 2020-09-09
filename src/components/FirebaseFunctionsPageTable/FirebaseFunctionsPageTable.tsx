@@ -139,10 +139,7 @@ const columnDefinitions: TableColumn<FunctionData>[] = [
 export const FirebaseFunctionsPageTable: React.FC = () => {
   const [settings, setSettings] = useSettings();
   const { value: availableProjects, loading, error } = useProjectIds();
-  const tableProps = useFirebaseFunctions({
-    //TODO: Modify useFirebaseFunctions to fetch data for multiple projects
-    project: settings.projects[0],
-  });
+  const tableProps = useFirebaseFunctions(settings.projects);
 
   useEffect(() => {
     tableProps.retry();

@@ -18,7 +18,7 @@ import { useApi, googleAuthApiRef, errorApiRef } from '@backstage/core';
 import { FunctionData } from '../types';
 import { firebaseFunctionsApiRef } from '../api';
 
-export function useFirebaseFunctions({ project }: { project: string }) {
+export function useFirebaseFunctions(projects: string[]) {
   const googleAuth = useApi(googleAuthApiRef);
   const firebaseFunctionsApi = useApi(firebaseFunctionsApiRef);
   const errorApi = useApi(errorApiRef);
@@ -26,7 +26,7 @@ export function useFirebaseFunctions({ project }: { project: string }) {
     FunctionData[]
   >(async () => {
     // TODO: handle message about wrong project name
-    if (!project) {
+    if (!projects) {
       return [];
     }
     const googleIdToken = await googleAuth.getAccessToken([
@@ -35,14 +35,14 @@ export function useFirebaseFunctions({ project }: { project: string }) {
     try {
       const firebaseFunctions = await firebaseFunctionsApi.listFunctions({
         googleIdToken,
-        project,
+        projects,
       });
       return firebaseFunctions.functionData;
     } catch (err) {
       errorApi.post(err);
       throw new Error(err);
     }
-  }, [project]);
+  }, [projects]);
 
   return {
     loading,
