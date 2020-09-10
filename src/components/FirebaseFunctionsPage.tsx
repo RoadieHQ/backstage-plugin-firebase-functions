@@ -48,11 +48,7 @@ const FirebaseFunctionsPage: React.FC<Props> = ({ entity }: Props) => {
               Plugin to show a project's firebase functions
             </SupportButton>
           </ContentHeader>
-          <Grid container spacing={3} direction="column">
-            <Grid item>
-              <FirebaseFunctionsPageTable />
-            </Grid>
-          </Grid>
+          <FirebaseFunctionsPageTable />
         </Content>
       </Page>
     </ContextProvider>

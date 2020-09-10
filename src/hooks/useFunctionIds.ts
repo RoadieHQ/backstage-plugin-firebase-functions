@@ -3,7 +3,7 @@ import { useApi } from '@backstage/core';
 import { useAsync } from 'react-use';
 import { useSettings } from './useSettings';
 
-export const useProjectIds = () => {
+export const useFunctionIds = () => {
   let [{ entity: entityCompoundName }] = useSettings();
 
   const catalogApi = useApi(catalogApiRef);
@@ -11,9 +11,10 @@ export const useProjectIds = () => {
   const { value, loading, error } = useAsync(async () => {
     const entity = await catalogApi.getEntityByName(entityCompoundName);
     const rawProjects =
-      entity?.metadata.annotations?.['cloud.google.com/project-ids'] ?? '';
-    const projects = rawProjects.split(',').map(p => p.trim());
-    return projects;
+      entity?.metadata.annotations?.['cloud.google.com/function-ids'] ?? '';
+    const functions = rawProjects.split(',').map(p => p.trim());
+    const availableProjects = [...new Set(functions.map(f => f.split('/')[1]))];
+    return { availableProjects, functions };
   });
   return { value, loading, error };
 };

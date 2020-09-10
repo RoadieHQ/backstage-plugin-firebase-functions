@@ -9,6 +9,7 @@ export type FunctionData = {
   project: string;
   envVariables: Record<string, string>;
   labels: Record<string, string>;
+  fullName: string;
 };
 
 export type FunctionDataDTO = {

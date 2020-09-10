@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Typography,
   Box,
@@ -30,13 +30,14 @@ import {
   CircularProgress,
   Checkbox,
   ListItemText,
+  Grid,
 } from '@material-ui/core';
 import { Table, TableColumn } from '@backstage/core';
 import { useFirebaseFunctions } from '../../hooks/useFirebaseFunctions';
 import { FunctionData } from '../../types';
 import moment from 'moment';
 import { useSettings } from '../../hooks/useSettings';
-import { useProjectIds } from '../../hooks/useProjectIds';
+import { useFunctionIds } from '../../hooks/useFunctionIds';
 import { State } from '../ContextProvider';
 
 const getElapsedTime = (start: string) => {
@@ -137,12 +138,21 @@ const columnDefinitions: TableColumn<FunctionData>[] = [
 ];
 
 export const FirebaseFunctionsPageTable: React.FC = () => {
+  const [projectsMenuOpen, setProjectsMenuOpen] = useState(false);
   const [settings, setSettings] = useSettings();
-  const { value: availableProjects, loading, error } = useProjectIds();
-  const tableProps = useFirebaseFunctions(settings.projects);
+  const { value, loading, error } = useFunctionIds();
+  const { availableProjects, functions: whitelistedFunctions } = value || {
+    availableProjects: [],
+    functions: [],
+  };
+  const firebaseFunctions = useFirebaseFunctions(settings.projects);
+
+  const functionsData = firebaseFunctions.functionsData?.filter(
+    filterFireabseFuntions(whitelistedFunctions),
+  );
 
   useEffect(() => {
-    tableProps.retry();
+    firebaseFunctions.retry();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settings.projects]);
 
@@ -150,47 +160,53 @@ export const FirebaseFunctionsPageTable: React.FC = () => {
     setSettings({ ...settings, projects: event.target.value as string[] });
   };
 
+  const projectSelect = loading ? (
+    <CircularProgress />
+  ) : error ? (
+    <Typography>
+      {'Error occured while loading available projects: ' + error}
+    </Typography>
+  ) : (
+    <FormControl>
+      <InputLabel id="project-ids-label">Select projects</InputLabel>
+      <Select
+        open={projectsMenuOpen}
+        onOpen={() => setProjectsMenuOpen(true)}
+        onClose={() => setProjectsMenuOpen(false)}
+        style={{ minWidth: '150px' }}
+        labelId="project-ids-label"
+        id="project-ids"
+        multiple
+        renderValue={selected => (selected as string[]).join(', ')}
+        value={settings.projects}
+        onChange={handleChange}
+        input={<Input />}
+      >
+        {availableProjects?.map(name => (
+          <MenuItem key={name} value={name}>
+            <Checkbox checked={settings.projects.indexOf(name) > -1} />
+            <ListItemText primary={name} />
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+  );
   return (
-    <Table
-      isLoading={tableProps.loading || tableProps.loading}
-      options={{
-        padding: 'dense',
-      }}
-      data={tableProps.functionsData ?? []}
-      title={
-        loading ? (
-          <CircularProgress />
-        ) : error ? (
-          <Typography>
-            {'Error occured while loading available projects: ' + error}
-          </Typography>
-        ) : (
-          <FormControl>
-            <InputLabel id="project-ids-label">Select projects</InputLabel>
-            <Select
-              style={{ minWidth: '150px' }}
-              labelId="project-ids-label"
-              id="project-ids"
-              multiple
-              renderValue={selected => (selected as string[]).join(', ')}
-              value={settings.projects}
-              onChange={handleChange}
-              input={<Input />}
-            >
-              {availableProjects?.map(name => (
-                <MenuItem key={name} value={name}>
-                  <Checkbox checked={settings.projects.indexOf(name) > -1} />
-                  <ListItemText primary={name} />
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        )
-      }
-      columns={columnDefinitions}
-      localization={getLocalizationObject(settings, tableProps)}
-      detailPanel={DetailPanel}
-    />
+    <Grid container spacing={3} direction="column">
+      <Grid item>{projectSelect}</Grid>
+      <Grid item>
+        <Table
+          isLoading={firebaseFunctions.loading || firebaseFunctions.loading}
+          options={{
+            padding: 'dense',
+          }}
+          data={functionsData ?? []}
+          columns={columnDefinitions}
+          localization={getLocalizationObject(settings, firebaseFunctions)}
+          detailPanel={DetailPanel}
+        />
+      </Grid>
+    </Grid>
   );
 };
 
@@ -201,13 +217,14 @@ function getLocalizationObject(
     readonly error: Error | undefined;
   },
 ) {
-  const message = !settings.projects
-    ? 'Select projects to fetch data'
-    : tableProps.loading
-    ? 'loading'
-    : tableProps.error
-    ? 'error occured while loading data: ' + tableProps.error
-    : undefined;
+  const message =
+    settings.projects.length === 0
+      ? 'Select projects to fetch data'
+      : tableProps.loading
+      ? 'loading'
+      : tableProps.error
+      ? 'error occured while loading data: ' + tableProps.error
+      : undefined;
 
   return message
     ? {
@@ -253,4 +270,10 @@ function DetailPanel(rowData: FunctionData) {
       </Box>
     </Box>
   );
+}
+
+function filterFireabseFuntions(whitelistedFunctions: string[]) {
+  return (element: FunctionData) => {
+    return whitelistedFunctions.includes(element.fullName);
+  };
 }
