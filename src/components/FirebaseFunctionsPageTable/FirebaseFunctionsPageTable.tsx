@@ -37,7 +37,7 @@ import { FunctionData } from '../../types';
 import moment from 'moment';
 import { useSettings } from '../../hooks/useSettings';
 import { useProjectIds } from '../../hooks/useProjectIds';
-import { Settings } from '../ContextProvider';
+import { State } from '../ContextProvider';
 
 const getElapsedTime = (start: string) => {
   return moment(start).fromNow();
@@ -147,7 +147,7 @@ export const FirebaseFunctionsPageTable: React.FC = () => {
   }, [settings.projects]);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setSettings({ projects: event.target.value as string[] });
+    setSettings({ ...settings, projects: event.target.value as string[] });
   };
 
   return (
@@ -195,7 +195,7 @@ export const FirebaseFunctionsPageTable: React.FC = () => {
 };
 
 function getLocalizationObject(
-  settings: Settings,
+  settings: State,
   tableProps: {
     readonly loading: boolean;
     readonly error: Error | undefined;
@@ -206,7 +206,7 @@ function getLocalizationObject(
     : tableProps.loading
     ? 'loading'
     : tableProps.error
-    ? 'error occured while loading data'
+    ? 'error occured while loading data: ' + tableProps.error
     : undefined;
 
   return message
