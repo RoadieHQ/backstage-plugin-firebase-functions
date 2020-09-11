@@ -17,10 +17,10 @@
 import { createDevApp } from '@backstage/dev-utils';
 import { CatalogClient, catalogApiRef } from '@backstage/plugin-catalog';
 import { firebaseFunctionsApiRef, FirebaseFunctionsClient } from '../src/api';
-import { plugin } from '../src/plugin';
+import { pluginStandalone } from '../src/plugin';
 
 createDevApp()
-  .registerPlugin(plugin)
+  .registerPlugin(pluginStandalone)
   .registerApiFactory({
     deps: {},
     factory: () => new FirebaseFunctionsClient(),
@@ -30,8 +30,9 @@ createDevApp()
     deps: {},
     factory: () =>
       new CatalogClient({
-        apiOrigin: 'http://localhost:7000',
-        basePath: '/catalog',
+        discoveryApi: {
+          getBaseUrl: () => Promise.resolve('http://localhost:7000/catalog'),
+        },
       }),
     implements: catalogApiRef,
   })

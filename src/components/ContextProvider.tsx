@@ -13,28 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { firebaseFunctionsApiRef } from '../api';
 import { useLocalStorage } from 'react-use';
+import { EntityCompoundName } from '@backstage/plugin-catalog';
 
-export type Settings = {
+export type State = {
   projects: string[];
+  entity: EntityCompoundName;
 };
 
 export const StateContext = React.createContext<
-  [Settings, React.Dispatch<React.SetStateAction<Settings | undefined>>]
+  [State, React.Dispatch<React.SetStateAction<State | undefined>>]
 >([] as any);
 const STORAGE_KEY = `${firebaseFunctionsApiRef.id}.settings`;
 
-const initialState: Settings = {
+const initialState: State = {
   projects: [],
+  entity: {
+    kind: 'Component',
+    name: 'backstage',
+    namespace: 'default',
+  },
 };
 
-export const ContextProvider: React.FC = ({ children }) => {
+type Props = { entity: EntityCompoundName };
+export const ContextProvider: React.FC<Props> = ({ entity, children }) => {
   const [settings, setSettings] = useLocalStorage(STORAGE_KEY, initialState);
   if (settings === undefined) {
     throw new Error('Firebase functions plugin settings is undefined');
   }
+
+  useEffect(() => {
+    if (settings.entity != entity) {
+      setSettings({ ...settings, entity });
+    }
+  }, [entity]);
 
   return (
     <StateContext.Provider value={[settings, setSettings]}>

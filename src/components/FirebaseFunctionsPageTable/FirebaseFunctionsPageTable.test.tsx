@@ -17,7 +17,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { FirebaseFunctionsPageTable } from '.';
-import { ContextProvider, Settings } from '../ContextProvider';
+import { ContextProvider, State } from '../ContextProvider';
 import {
   googleAuthApiRef,
   errorApiRef,
@@ -40,9 +40,12 @@ describe('FirebaseFunctionsTable', () => {
     (useSettings as any).mockReturnValue([
       {
         projects: [],
-        authMethod: 'OAuth2',
-        apiKey: '',
-      } as Settings,
+        entity: {
+          kind: 'Component',
+          name: 'backstage',
+          namespace: 'default',
+        },
+      } as State,
     ]);
     (useFirebaseFunctions as any).mockReturnValue({
       functionsData: [],
@@ -50,7 +53,13 @@ describe('FirebaseFunctionsTable', () => {
     });
     const rendered = render(
       <ApiProvider apis={apis}>
-        <ContextProvider>
+        <ContextProvider
+          entity={{
+            kind: 'Component',
+            name: 'backstage',
+            namespace: 'default',
+          }}
+        >
           <FirebaseFunctionsPageTable />
         </ContextProvider>
       </ApiProvider>,
@@ -69,9 +78,12 @@ describe('FirebaseFunctionsTable', () => {
     (useSettings as any).mockReturnValue([
       {
         projects: ['test-project'],
-        authMethod: 'OAuth2',
-        apiKey: '',
-      } as Settings,
+        entity: {
+          kind: 'Component',
+          name: 'backstage',
+          namespace: 'default',
+        },
+      } as State,
     ]);
     (useFirebaseFunctions as any).mockReturnValue({
       functionsData: mockedFunctionsData,
@@ -79,7 +91,13 @@ describe('FirebaseFunctionsTable', () => {
     });
     const rendered = render(
       <ApiProvider apis={apis}>
-        <ContextProvider>
+        <ContextProvider
+          entity={{
+            kind: 'Component',
+            name: 'backstage',
+            namespace: 'default',
+          }}
+        >
           <FirebaseFunctionsPageTable />
         </ContextProvider>
       </ApiProvider>,

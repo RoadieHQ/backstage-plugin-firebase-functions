@@ -27,12 +27,13 @@ import {
 } from '@backstage/core';
 
 import { FirebaseFunctionsPageTable } from './FirebaseFunctionsPageTable';
-import Settings from './Settings';
 import { ContextProvider } from './ContextProvider';
+import { EntityCompoundName } from '@backstage/plugin-catalog';
 
-const FirebaseFunctionsPage: React.FC = () => {
+type Props = { entity: EntityCompoundName };
+const FirebaseFunctionsPage: React.FC<Props> = ({ entity }: Props) => {
   return (
-    <ContextProvider>
+    <ContextProvider entity={entity}>
       <Page theme={pageTheme.tool}>
         <Header
           title="Firebase Functions Plugin"
@@ -47,11 +48,7 @@ const FirebaseFunctionsPage: React.FC = () => {
               Plugin to show a project's firebase functions
             </SupportButton>
           </ContentHeader>
-          <Grid container spacing={3} direction="column">
-            <Grid item>
-              <FirebaseFunctionsPageTable />
-            </Grid>
-          </Grid>
+          <FirebaseFunctionsPageTable />
         </Content>
       </Page>
     </ContextProvider>

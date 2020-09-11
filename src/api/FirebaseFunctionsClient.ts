@@ -82,6 +82,7 @@ export class FirebaseFunctionsClient implements FirebaseFunctionsApi {
               region: r.name.split('/').slice(-3)[0],
               labels: r.labels,
               envVariables: r.environmentVariables,
+              fullName: r.name,
             } as FunctionData),
         ),
       );

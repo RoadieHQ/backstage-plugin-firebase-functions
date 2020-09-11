@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import React from 'react';
 import { createPlugin, createRouteRef } from '@backstage/core';
 import FirebaseFunctionsPage from './components/FirebaseFunctionsPage';
 
@@ -21,15 +22,25 @@ export const rootRouteRef = createRouteRef({
   path: '/firebase-functions',
   title: 'Firebase functions list',
 });
-export const projectRouteRef = createRouteRef({
-  path: '/firebase-functions/:kind/:optionalNamespaceAndName',
-  title: 'Firebase functions list for project',
-});
 
 export const plugin = createPlugin({
   id: 'firebase-functions',
   register({ router }) {
     router.addRoute(rootRouteRef, FirebaseFunctionsPage);
-    router.addRoute(projectRouteRef, FirebaseFunctionsPage);
+  },
+});
+
+export const pluginStandalone = createPlugin({
+  id: 'firebase-functions',
+  register({ router }) {
+    router.addRoute(rootRouteRef, () => (
+      <FirebaseFunctionsPage
+        entity={{
+          kind: 'Component',
+          name: 'sample-service',
+          namespace: 'default',
+        }}
+      />
+    ));
   },
 });
