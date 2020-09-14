@@ -15,7 +15,6 @@
  */
 
 import React from 'react';
-import { Grid } from '@material-ui/core';
 import {
   Header,
   Page,
@@ -28,9 +27,9 @@ import {
 
 import { FirebaseFunctionsPageTable } from './FirebaseFunctionsPageTable';
 import { ContextProvider } from './ContextProvider';
-import { EntityCompoundName } from '@backstage/plugin-catalog';
+import { Entity } from '@backstage/catalog-model';
 
-type Props = { entity: EntityCompoundName };
+type Props = { entity: Entity };
 const FirebaseFunctionsPage: React.FC<Props> = ({ entity }: Props) => {
   return (
     <ContextProvider entity={entity}>

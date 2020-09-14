@@ -1014,7 +1014,7 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@backstage/catalog-model@^0.1.1-alpha.19", "@backstage/catalog-model@^0.1.1-alpha.21":
+"@backstage/catalog-model@^0.1.1-alpha.18", "@backstage/catalog-model@^0.1.1-alpha.21":
   version "0.1.1-alpha.21"
   resolved "https://registry.yarnpkg.com/@backstage/catalog-model/-/catalog-model-0.1.1-alpha.21.tgz#8672a567fe4eacd0fa86456f02de5a93027f6541"
   integrity sha512-zyix7PMzHS6kxWE0EEqXKKHYnONy3lz6kAPOIP7gBwfhY9gvrgxpVXCMP1oLwOcDN4nenGjL4+HHFvzViWW6hQ==
@@ -1032,7 +1032,7 @@
   resolved "https://registry.yarnpkg.com/@backstage/cli-common/-/cli-common-0.1.1-alpha.21.tgz#f0542ea366878b45447516676d811e83b381b913"
   integrity sha512-gq9V49gAsW5I+sqVy8VN8XPQMo1dMJoXzqlf86UrkwkDHdbhPsA6vxQUJOS2Uk/2O+9xb2gNKH6isbUHUDA5Xg==
 
-"@backstage/cli@^0.1.1-alpha.21":
+"@backstage/cli@^0.1.1-alpha.18", "@backstage/cli@^0.1.1-alpha.21":
   version "0.1.1-alpha.21"
   resolved "https://registry.yarnpkg.com/@backstage/cli/-/cli-0.1.1-alpha.21.tgz#9827e6cc2c71259f6dd007c387908833a6577d12"
   integrity sha512-lSruF8gYD3pMMk+tUCf9nzqSHpWCcLd8aaNYYPInbhh1T9hSn7Fc0O1ggjTTBuolmZcR598EP1lR/pljZl50mw==
@@ -1123,7 +1123,7 @@
   dependencies:
     lodash "^4.17.15"
 
-"@backstage/core-api@^0.1.1-alpha.19", "@backstage/core-api@^0.1.1-alpha.21":
+"@backstage/core-api@^0.1.1-alpha.18", "@backstage/core-api@^0.1.1-alpha.21":
   version "0.1.1-alpha.21"
   resolved "https://registry.yarnpkg.com/@backstage/core-api/-/core-api-0.1.1-alpha.21.tgz#16950d601f9132f6414fcd75c01becf793e2e2fc"
   integrity sha512-qBLATWbcM+ugKEYGlli/vc1UnQTeqnjV9Jg/PVoqaC2nBcLN9AZAb+D68kudNApLvaTCfkZYSUjRKXxVxkmDOg==
@@ -1139,7 +1139,7 @@
     react-use "^15.3.3"
     zen-observable "^0.8.15"
 
-"@backstage/core@^0.1.1-alpha.19", "@backstage/core@^0.1.1-alpha.21":
+"@backstage/core@^0.1.1-alpha.18", "@backstage/core@^0.1.1-alpha.21":
   version "0.1.1-alpha.21"
   resolved "https://registry.yarnpkg.com/@backstage/core/-/core-0.1.1-alpha.21.tgz#ab623cdbaa4188859f9359731262e920445c137d"
   integrity sha512-YXz+m8oXEf6AcXOfhjUojbo6jUeoHM58QVJPhro57isaGCHbbTYqnkBPZZpHRkW8ctGjzfW1haYh9HE9FJWzNw==
@@ -1168,7 +1168,7 @@
     react-syntax-highlighter "^13.5.1"
     react-use "^15.3.3"
 
-"@backstage/dev-utils@^0.1.1-alpha.19":
+"@backstage/dev-utils@^0.1.1-alpha.18":
   version "0.1.1-alpha.21"
   resolved "https://registry.yarnpkg.com/@backstage/dev-utils/-/dev-utils-0.1.1-alpha.21.tgz#ec940239d4d28f18f065732d35f939f1126c8f6c"
   integrity sha512-aYT9d2L3BUGf4IhpROsimaRBLtYt88omHgDcwfGBa+P2QNjifJmarksrUAA0NwlwtGWKJs/OnYk4wpBjHeGmhA==
@@ -1209,7 +1209,7 @@
     react-use "^15.3.3"
     swagger-ui-react "^3.31.1"
 
-"@backstage/plugin-catalog@^0.1.1-alpha.19", "@backstage/plugin-catalog@^0.1.1-alpha.21":
+"@backstage/plugin-catalog@^0.1.1-alpha.18", "@backstage/plugin-catalog@^0.1.1-alpha.21":
   version "0.1.1-alpha.21"
   resolved "https://registry.yarnpkg.com/@backstage/plugin-catalog/-/plugin-catalog-0.1.1-alpha.21.tgz#d83b16a73f631513097ca022f28b267de0df2121"
   integrity sha512-TSTaSHUoC0T0QnDy+ES5fAevtknBVUM6VqyFzEK4mBPmHnGB4Y8m8/AlT6+LQY7J1b0NCfzVda5fQoSP0+A6aQ==
@@ -1329,7 +1329,7 @@
     react "^16.12.0"
     react-dom "^16.12.0"
 
-"@backstage/test-utils@^0.1.1-alpha.21":
+"@backstage/test-utils@^0.1.1-alpha.18", "@backstage/test-utils@^0.1.1-alpha.21":
   version "0.1.1-alpha.21"
   resolved "https://registry.yarnpkg.com/@backstage/test-utils/-/test-utils-0.1.1-alpha.21.tgz#c0129d823ace027f7ba145a10f82caf225193988"
   integrity sha512-G+RNYNWTRpu6Fb0nQ+yQEpmA1/rmfoS6V1vh5mofetS9m7MMpIHWJmW0PxGYGONic3J57eCnrOH4444Z6lwXwA==
@@ -1349,7 +1349,7 @@
     react-router-dom "6.0.0-beta.0"
     zen-observable "^0.8.15"
 
-"@backstage/theme@^0.1.1-alpha.19", "@backstage/theme@^0.1.1-alpha.21":
+"@backstage/theme@^0.1.1-alpha.18", "@backstage/theme@^0.1.1-alpha.21":
   version "0.1.1-alpha.21"
   resolved "https://registry.yarnpkg.com/@backstage/theme/-/theme-0.1.1-alpha.21.tgz#e5b483d48cebd651386b5b867a72357e2f1987da"
   integrity sha512-ZO/T1CvXBKA+fGspaBjDaD1zK9ffl2/GuKN0MmEJdQVIn4nq/dRdnG84+DB621j2BxExCjnyYeahX1o15JitNg==

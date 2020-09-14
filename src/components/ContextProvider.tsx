@@ -16,11 +16,11 @@
 import React, { useEffect } from 'react';
 import { firebaseFunctionsApiRef } from '../api';
 import { useLocalStorage } from 'react-use';
-import { EntityCompoundName } from '@backstage/plugin-catalog';
+import { Entity } from '@backstage/catalog-model';
 
 export type State = {
   projects: string[];
-  entity: EntityCompoundName;
+  entity: Entity | null;
 };
 
 export const StateContext = React.createContext<
@@ -30,14 +30,10 @@ const STORAGE_KEY = `${firebaseFunctionsApiRef.id}.settings`;
 
 const initialState: State = {
   projects: [],
-  entity: {
-    kind: 'Component',
-    name: 'backstage',
-    namespace: 'default',
-  },
+  entity: null,
 };
 
-type Props = { entity: EntityCompoundName };
+type Props = { entity: Entity };
 export const ContextProvider: React.FC<Props> = ({ entity, children }) => {
   const [settings, setSettings] = useLocalStorage(STORAGE_KEY, initialState);
   if (settings === undefined) {

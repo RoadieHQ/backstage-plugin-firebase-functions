@@ -27,6 +27,7 @@ import {
 import { firebaseFunctionsApiRef } from '../../api';
 import { useSettings } from '../../hooks/useSettings';
 import { useFirebaseFunctions } from '../../hooks/useFirebaseFunctions';
+import { entityMock } from '../../plugin';
 jest.mock('../../hooks/useSettings');
 jest.mock('../../hooks/useFirebaseFunctions');
 
@@ -40,11 +41,7 @@ describe('FirebaseFunctionsTable', () => {
     (useSettings as any).mockReturnValue([
       {
         projects: [],
-        entity: {
-          kind: 'Component',
-          name: 'backstage',
-          namespace: 'default',
-        },
+        entity: entityMock,
       } as State,
     ]);
     (useFirebaseFunctions as any).mockReturnValue({
@@ -53,13 +50,7 @@ describe('FirebaseFunctionsTable', () => {
     });
     const rendered = render(
       <ApiProvider apis={apis}>
-        <ContextProvider
-          entity={{
-            kind: 'Component',
-            name: 'backstage',
-            namespace: 'default',
-          }}
-        >
+        <ContextProvider entity={entityMock}>
           <FirebaseFunctionsPageTable />
         </ContextProvider>
       </ApiProvider>,
@@ -78,11 +69,7 @@ describe('FirebaseFunctionsTable', () => {
     (useSettings as any).mockReturnValue([
       {
         projects: ['test-project'],
-        entity: {
-          kind: 'Component',
-          name: 'backstage',
-          namespace: 'default',
-        },
+        entity: entityMock,
       } as State,
     ]);
     (useFirebaseFunctions as any).mockReturnValue({
@@ -91,13 +78,7 @@ describe('FirebaseFunctionsTable', () => {
     });
     const rendered = render(
       <ApiProvider apis={apis}>
-        <ContextProvider
-          entity={{
-            kind: 'Component',
-            name: 'backstage',
-            namespace: 'default',
-          }}
-        >
+        <ContextProvider entity={entityMock}>
           <FirebaseFunctionsPageTable />
         </ContextProvider>
       </ApiProvider>,
