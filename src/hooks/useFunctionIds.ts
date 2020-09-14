@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 import { useAsync } from 'react-use';
-import { FIREBASE_FUNCTION_IDS } from '../components/Router';
 import { useSettings } from './useSettings';
+
+export const FIREBASE_FUNCTION_IDS = 'cloud.google.com/function-ids';
 
 export const useFunctionIds = () => {
   let [{ entity }] = useSettings();

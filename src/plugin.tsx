@@ -15,9 +15,17 @@
  */
 
 import React from 'react';
-import { createPlugin, createRouteRef } from '@backstage/core';
+import {
+  createPlugin,
+  createRouteRef,
+  createApiFactory,
+} from '@backstage/core';
 import FirebaseFunctionsPage from './components/FirebaseFunctionsPage';
 import { Entity } from '@backstage/catalog-model';
+import { firebaseFunctionsApiRef, FirebaseFunctionsClient } from './api';
+
+const createPluginAny = createPlugin as any;
+const createApiFactoryAny = createApiFactory as any;
 
 export const standaloneRootRouteRef = createRouteRef({
   path: '/firebase-functions',
@@ -29,11 +37,11 @@ export const rootRouteRef = createRouteRef({
   title: 'Firebase functions list',
 });
 
-export const plugin = createPlugin({
+export const plugin = createPluginAny({
   id: 'firebase-functions',
   // comment-out 'apis' property for local standalone development (until backstage-core is upgraded to support 'apis' in type definition)
   apis: [
-    createApiFactory(firebaseFunctionsApiRef, new FirebaseFunctionsClient()),
+    createApiFactoryAny(firebaseFunctionsApiRef, new FirebaseFunctionsClient()),
   ],
 });
 
