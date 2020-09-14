@@ -17,30 +17,58 @@
 import React from 'react';
 import { createPlugin, createRouteRef } from '@backstage/core';
 import FirebaseFunctionsPage from './components/FirebaseFunctionsPage';
+import { Entity } from '@backstage/catalog-model';
+
+export const standaloneRootRouteRef = createRouteRef({
+  path: '/firebase-functions',
+  title: 'Firebase functions list',
+});
 
 export const rootRouteRef = createRouteRef({
-  path: '/firebase-functions',
+  path: '',
   title: 'Firebase functions list',
 });
 
 export const plugin = createPlugin({
   id: 'firebase-functions',
-  register({ router }) {
-    router.addRoute(rootRouteRef, FirebaseFunctionsPage);
-  },
+  // comment-out 'apis' property for local standalone development (until backstage-core is upgraded to support 'apis' in type definition)
+  apis: [
+    createApiFactory(firebaseFunctionsApiRef, new FirebaseFunctionsClient()),
+  ],
 });
 
 export const pluginStandalone = createPlugin({
   id: 'firebase-functions',
   register({ router }) {
-    router.addRoute(rootRouteRef, () => (
-      <FirebaseFunctionsPage
-        entity={{
-          kind: 'Component',
-          name: 'sample-service',
-          namespace: 'default',
-        }}
-      />
+    router.addRoute(standaloneRootRouteRef, () => (
+      <FirebaseFunctionsPage entity={entityMock} />
     ));
   },
 });
+
+export var entityMock: Entity = {
+  apiVersion: 'backstage.io/v1alpha1',
+  kind: 'Component',
+  metadata: {
+    annotations: {
+      'backstage.io/managed-by-location':
+        'github:https://github.com/mcalus3/sample-service/blob/master/backstage.yaml',
+      'circleci.com/project-slug': 'RoadieHQ/sample-service',
+      'github.com/project-slug': 'RoadieHQ/sample-service',
+      'backstage.io/github-actions-id': 'RoadieHQ/sample-service',
+      'cloud.google.com/function-ids':
+        'projects/backstage-test-project/locations/us-central1/functions/helloMarek,projects/backstage-test-project/locations/us-central1/functions/helloWorld,projects/backstage-test-project2/locations/us-central1/functions/helloMarek,projects/backstage-test-project2/locations/us-central1/functions/helloWorld',
+    },
+    name: 'sample-service',
+    description:
+      'A service for testing Backstage functionality. For example, we can trigger errors\non the sample-service, these are sent to Sentry, then we can view them in the \nBackstage plugin for Sentry.\n',
+    uid: 'b47ae42c-2a18-41bb-b21b-9310adccb9f3',
+    etag: 'OGE4MzJiNWQtNzM0OC00ZmExLTgzNjItNjljZDlkZDNmMTY4',
+    generation: 1,
+  },
+  spec: {
+    type: 'service',
+    owner: 'david@roadie.io',
+    lifecycle: 'experimental',
+  },
+};
