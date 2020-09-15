@@ -26,7 +26,7 @@ export const isPluginApplicableToEntity = (entity: Entity) =>
 
 export const Router = ({ entity }: { entity: Entity }) =>
   !isPluginApplicableToEntity(entity) ? (
-    <WarningPanel title=" GitHubActions plugin:">
+    <WarningPanel title="Firebase functions plugin:">
       <pre>{FIREBASE_FUNCTION_IDS}</pre> annotation is missing on the entity.
     </WarningPanel>
   ) : (
