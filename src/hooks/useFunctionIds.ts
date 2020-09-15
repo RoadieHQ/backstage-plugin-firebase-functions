@@ -19,7 +19,7 @@ import { useSettings } from './useSettings';
 export const FIREBASE_FUNCTION_IDS = 'cloud.google.com/function-ids';
 
 export const useFunctionIds = () => {
-  let [{ entity }] = useSettings();
+  const [{ entity }] = useSettings();
 
   const { value, loading, error } = useAsync(async () => {
     const rawProjects =

@@ -164,7 +164,7 @@ export const FirebaseFunctionsPageTable: React.FC = () => {
     <CircularProgress />
   ) : error ? (
     <Typography>
-      {'Error occured while loading available projects: ' + error}
+      {`Error occured while loading available projects: ${error}`}
     </Typography>
   ) : (
     <FormControl>
@@ -223,7 +223,7 @@ function getLocalizationObject(
       : tableProps.loading
       ? 'loading'
       : tableProps.error
-      ? 'error occured while loading data: ' + tableProps.error
+      ? `error occured while loading data: ${tableProps.error}`
       : undefined;
 
   return message

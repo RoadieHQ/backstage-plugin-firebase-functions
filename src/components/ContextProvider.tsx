@@ -41,9 +41,10 @@ export const ContextProvider: React.FC<Props> = ({ entity, children }) => {
   }
 
   useEffect(() => {
-    if (settings.entity != entity) {
+    if (settings.entity !== entity) {
       setSettings({ ...settings, entity });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [entity]);
 
   return (
