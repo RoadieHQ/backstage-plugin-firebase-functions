@@ -15,25 +15,6 @@
  */
 
 import { createDevApp } from '@backstage/dev-utils';
-import { CatalogClient, catalogApiRef } from '@backstage/plugin-catalog';
-import { firebaseFunctionsApiRef, FirebaseFunctionsClient } from '../src/api';
 import { pluginStandalone } from '../src/plugin';
 
-createDevApp()
-  .registerPlugin(pluginStandalone)
-  .registerApiFactory({
-    deps: {},
-    factory: () => new FirebaseFunctionsClient(),
-    implements: firebaseFunctionsApiRef,
-  })
-  .registerApiFactory({
-    deps: {},
-    factory: () =>
-      new CatalogClient({
-        discoveryApi: {
-          getBaseUrl: () => Promise.resolve('http://localhost:7000/catalog'),
-        },
-      }),
-    implements: catalogApiRef,
-  })
-  .render();
+createDevApp().registerPlugin(pluginStandalone).render();

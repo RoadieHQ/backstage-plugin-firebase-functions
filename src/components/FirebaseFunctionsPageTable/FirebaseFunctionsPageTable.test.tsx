@@ -27,7 +27,8 @@ import {
 import { firebaseFunctionsApiRef } from '../../api';
 import { useSettings } from '../../hooks/useSettings';
 import { useFirebaseFunctions } from '../../hooks/useFirebaseFunctions';
-import { entityMock } from '../../plugin';
+import { getEntityMock } from '../../plugin';
+
 jest.mock('../../hooks/useSettings');
 jest.mock('../../hooks/useFirebaseFunctions');
 
@@ -41,7 +42,7 @@ describe('FirebaseFunctionsTable', () => {
     (useSettings as any).mockReturnValue([
       {
         projects: [],
-        entity: entityMock,
+        entity: getEntityMock(),
       } as State,
     ]);
     (useFirebaseFunctions as any).mockReturnValue({
@@ -50,7 +51,7 @@ describe('FirebaseFunctionsTable', () => {
     });
     const rendered = render(
       <ApiProvider apis={apis}>
-        <ContextProvider entity={entityMock}>
+        <ContextProvider entity={getEntityMock()}>
           <FirebaseFunctionsPageTable />
         </ContextProvider>
       </ApiProvider>,
@@ -69,16 +70,16 @@ describe('FirebaseFunctionsTable', () => {
     (useSettings as any).mockReturnValue([
       {
         projects: ['test-project'],
-        entity: entityMock,
+        entity: getEntityMock(),
       } as State,
     ]);
     (useFirebaseFunctions as any).mockReturnValue({
-      functionsData: mockedFunctionsData,
+      functionsData: getMockedFunctionsData(),
       retry: () => {},
     });
     const rendered = render(
       <ApiProvider apis={apis}>
-        <ContextProvider entity={entityMock}>
+        <ContextProvider entity={getEntityMock()}>
           <FirebaseFunctionsPageTable />
         </ContextProvider>
       </ApiProvider>,
@@ -88,47 +89,49 @@ describe('FirebaseFunctionsTable', () => {
   });
 });
 
-var mockedFunctionsData = [
-  {
-    name: 'helloMarek',
-    urlTrigger:
-      'https://us-central1-backstage-test-project.cloudfunctions.net/helloMarek',
-    status: 'ACTIVE',
-    updateTime: '2020-09-04T09:08:15.967Z',
-    runtime: 'nodejs10',
-    availableMemoryMb: 256,
-    project: 'backstage-test-project',
-    region: 'us-central1',
-    labels: {
-      'deployment-tool': 'cli-firebase',
+function getMockedFunctionsData() {
+  return [
+    {
+      name: 'helloMarek',
+      urlTrigger:
+        'https://us-central1-backstage-test-project.cloudfunctions.net/helloMarek',
+      status: 'ACTIVE',
+      updateTime: '2020-09-04T09:08:15.967Z',
+      runtime: 'nodejs10',
+      availableMemoryMb: 256,
+      project: 'backstage-test-project',
+      region: 'us-central1',
+      labels: {
+        'deployment-tool': 'cli-firebase',
+      },
+      envVariables: {
+        FIREBASE_CONFIG:
+          '{"projectId":"backstage-test-project","databaseURL":"https://backstage-test-project.firebaseio.com","storageBucket":"backstage-test-project.appspot.com"}',
+      },
+      tableData: {
+        id: 0,
+      },
     },
-    envVariables: {
-      FIREBASE_CONFIG:
-        '{"projectId":"backstage-test-project","databaseURL":"https://backstage-test-project.firebaseio.com","storageBucket":"backstage-test-project.appspot.com"}',
+    {
+      name: 'helloMarek10',
+      urlTrigger:
+        'https://us-central1-backstage-test-project.cloudfunctions.net/helloMarek10',
+      status: 'ACTIVE',
+      updateTime: '2020-09-04T09:07:35.517Z',
+      runtime: 'nodejs10',
+      availableMemoryMb: 256,
+      project: 'backstage-test-project',
+      region: 'us-central1',
+      labels: {
+        'deployment-tool': 'cli-firebase',
+      },
+      envVariables: {
+        FIREBASE_CONFIG:
+          '{"projectId":"backstage-test-project","databaseURL":"https://backstage-test-project.firebaseio.com","storageBucket":"backstage-test-project.appspot.com"}',
+      },
+      tableData: {
+        id: 1,
+      },
     },
-    tableData: {
-      id: 0,
-    },
-  },
-  {
-    name: 'helloMarek10',
-    urlTrigger:
-      'https://us-central1-backstage-test-project.cloudfunctions.net/helloMarek10',
-    status: 'ACTIVE',
-    updateTime: '2020-09-04T09:07:35.517Z',
-    runtime: 'nodejs10',
-    availableMemoryMb: 256,
-    project: 'backstage-test-project',
-    region: 'us-central1',
-    labels: {
-      'deployment-tool': 'cli-firebase',
-    },
-    envVariables: {
-      FIREBASE_CONFIG:
-        '{"projectId":"backstage-test-project","databaseURL":"https://backstage-test-project.firebaseio.com","storageBucket":"backstage-test-project.appspot.com"}',
-    },
-    tableData: {
-      id: 1,
-    },
-  },
-];
+  ];
+}

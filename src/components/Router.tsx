@@ -15,7 +15,7 @@
  */
 import React from 'react';
 import { Entity } from '@backstage/catalog-model';
-import { Routes, Route } from 'react-router';
+import { Routes, Route } from 'react-router-dom';
 import { rootRouteRef } from '../plugin';
 import FirebaseFunctionsPage from './FirebaseFunctionsPage';
 import { FIREBASE_FUNCTION_IDS } from '../hooks/useFunctionIds';

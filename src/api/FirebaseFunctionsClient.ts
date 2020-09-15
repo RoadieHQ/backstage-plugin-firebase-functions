@@ -43,7 +43,7 @@ async function fetch<T = any>(url: string, init?: RequestInit): Promise<T> {
 export class FirebaseFunctionsClient implements FirebaseFunctionsApi {
   async listFunctions({ googleIdToken, projects }: ListFunctionsArgs) {
     let functionData: FunctionData[] = [];
-    //Fetch data for each of selected projects
+    // Fetch data for each of selected projects
     for (let i = 0; i < projects.length; i++) {
       const project = projects[i];
 
@@ -59,7 +59,7 @@ export class FirebaseFunctionsClient implements FirebaseFunctionsApi {
       do {
         // for subsequent calls include nextPageToken
         if (resp) {
-          url = url + '?pageToken=$' + encodeURIComponent(resp.nextPageToken);
+          url = `${url}?pageToken=$${encodeURIComponent(resp.nextPageToken)}`;
         }
         resp = await fetch<{
           functions: FunctionDataDTO[];
