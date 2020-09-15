@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useAsync } from 'react-use';
 import { useSettings } from './useSettings';
 
 export const FIREBASE_FUNCTION_IDS = 'cloud.google.com/function-ids';
@@ -21,12 +20,13 @@ export const FIREBASE_FUNCTION_IDS = 'cloud.google.com/function-ids';
 export const useFunctionIds = () => {
   const [{ entity }] = useSettings();
 
-  const { value, loading, error } = useAsync(async () => {
-    const rawProjects =
-      entity?.metadata.annotations?.[FIREBASE_FUNCTION_IDS] ?? '';
-    const functions = rawProjects.split(',').map(p => p.trim());
-    const availableProjects = [...new Set(functions.map(f => f.split('/')[1]))];
-    return { availableProjects, functions };
-  });
-  return { value, loading, error };
+  const rawProjects =
+    entity?.metadata.annotations?.[FIREBASE_FUNCTION_IDS] ?? '';
+  const functions = rawProjects.split(',').map(p => p.trim());
+  const availableProjects = [...new Set(functions.map(f => f.split('/')[1]))];
+  return {
+    value: { availableProjects, functions },
+    loading: false,
+    error: false,
+  };
 };

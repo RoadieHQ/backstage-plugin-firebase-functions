@@ -16,12 +16,10 @@
 
 import React from 'react';
 import {
-  Header,
   Page,
   pageTheme,
   Content,
   ContentHeader,
-  HeaderLabel,
   SupportButton,
 } from '@backstage/core';
 
