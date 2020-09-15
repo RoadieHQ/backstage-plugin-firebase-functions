@@ -19,15 +19,21 @@ import { Routes, Route } from 'react-router-dom';
 import { rootRouteRef } from '../plugin';
 import FirebaseFunctionsPage from './FirebaseFunctionsPage';
 import { FIREBASE_FUNCTION_IDS } from '../hooks/useFunctionIds';
+import { WarningPanel } from '@backstage/core';
 
 export const isPluginApplicableToEntity = (entity: Entity) =>
   entity?.metadata.annotations?.[FIREBASE_FUNCTION_IDS];
 
-export const Router = ({ entity }: { entity: Entity }) => (
-  <Routes>
-    <Route
-      path={`/${rootRouteRef.path}`}
-      element={<FirebaseFunctionsPage entity={entity} />}
-    />
-  </Routes>
-);
+export const Router = ({ entity }: { entity: Entity }) =>
+  !isPluginApplicableToEntity(entity) ? (
+    <WarningPanel title=" GitHubActions plugin:">
+      <pre>{FIREBASE_FUNCTION_IDS}</pre> annotation is missing on the entity.
+    </WarningPanel>
+  ) : (
+    <Routes>
+      <Route
+        path={`/${rootRouteRef.path}`}
+        element={<FirebaseFunctionsPage entity={entity} />}
+      />
+    </Routes>
+  );
