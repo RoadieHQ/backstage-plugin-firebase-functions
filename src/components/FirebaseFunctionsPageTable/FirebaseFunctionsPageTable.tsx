@@ -138,7 +138,6 @@ const columnDefinitions: TableColumn<FunctionData>[] = [
 ];
 
 export const FirebaseFunctionsPageTable: React.FC = () => {
-  const [projectsMenuOpen, setProjectsMenuOpen] = useState(false);
   const [settings, setSettings] = useSettings();
   const {
     availableProjects,
@@ -163,9 +162,6 @@ export const FirebaseFunctionsPageTable: React.FC = () => {
     <FormControl>
       <InputLabel id="project-ids-label">Select projects</InputLabel>
       <Select
-        open={projectsMenuOpen}
-        onOpen={() => setProjectsMenuOpen(true)}
-        onClose={() => setProjectsMenuOpen(false)}
         style={{ minWidth: '150px' }}
         labelId="project-ids-label"
         id="project-ids"
