@@ -140,11 +140,10 @@ const columnDefinitions: TableColumn<FunctionData>[] = [
 export const FirebaseFunctionsPageTable: React.FC = () => {
   const [projectsMenuOpen, setProjectsMenuOpen] = useState(false);
   const [settings, setSettings] = useSettings();
-  const { value, loading, error } = useFunctionIds();
-  const { availableProjects, functions: whitelistedFunctions } = value || {
-    availableProjects: [],
-    functions: [],
-  };
+  const {
+    availableProjects,
+    functions: whitelistedFunctions,
+  } = useFunctionIds();
   const firebaseFunctions = useFirebaseFunctions(settings.projects);
 
   const functionsData = firebaseFunctions.functionsData?.filter(
@@ -160,46 +159,31 @@ export const FirebaseFunctionsPageTable: React.FC = () => {
     setSettings({ ...settings, projects: event.target.value as string[] });
   };
 
-  let projectSelect = null;
-
-  switch (true) {
-    case loading:
-      projectSelect = <CircularProgress />;
-      break;
-    case error:
-      projectSelect = (
-        <Typography>
-          {`Error occured while loading available projects: ${error}`}
-        </Typography>
-      );
-      break;
-    default:
-      projectSelect = (
-        <FormControl>
-          <InputLabel id="project-ids-label">Select projects</InputLabel>
-          <Select
-            open={projectsMenuOpen}
-            onOpen={() => setProjectsMenuOpen(true)}
-            onClose={() => setProjectsMenuOpen(false)}
-            style={{ minWidth: '150px' }}
-            labelId="project-ids-label"
-            id="project-ids"
-            multiple
-            renderValue={selected => (selected as string[]).join(', ')}
-            value={settings.projects}
-            onChange={handleChange}
-            input={<Input />}
-          >
-            {availableProjects?.map(name => (
-              <MenuItem key={name} value={name}>
-                <Checkbox checked={settings.projects.indexOf(name) > -1} />
-                <ListItemText primary={name} />
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      );
-  }
+  const projectSelect = (
+    <FormControl>
+      <InputLabel id="project-ids-label">Select projects</InputLabel>
+      <Select
+        open={projectsMenuOpen}
+        onOpen={() => setProjectsMenuOpen(true)}
+        onClose={() => setProjectsMenuOpen(false)}
+        style={{ minWidth: '150px' }}
+        labelId="project-ids-label"
+        id="project-ids"
+        multiple
+        renderValue={selected => (selected as string[]).join(', ')}
+        value={settings.projects}
+        onChange={handleChange}
+        input={<Input />}
+      >
+        {availableProjects?.map(name => (
+          <MenuItem key={name} value={name}>
+            <Checkbox checked={settings.projects.indexOf(name) > -1} />
+            <ListItemText primary={name} />
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+  );
   return (
     <Grid container spacing={3} direction="column">
       <Grid item>{projectSelect}</Grid>

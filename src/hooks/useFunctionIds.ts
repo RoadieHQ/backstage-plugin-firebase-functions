@@ -24,9 +24,5 @@ export const useFunctionIds = () => {
     entity?.metadata.annotations?.[FIREBASE_FUNCTION_IDS] ?? '';
   const functions = rawProjects.split(',').map(p => p.trim());
   const availableProjects = [...new Set(functions.map(f => f.split('/')[1]))];
-  return {
-    value: { availableProjects, functions },
-    loading: false,
-    error: false,
-  };
+  return { availableProjects, functions };
 };
