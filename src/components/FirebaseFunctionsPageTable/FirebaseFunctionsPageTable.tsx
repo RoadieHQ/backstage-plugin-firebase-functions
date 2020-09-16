@@ -160,37 +160,46 @@ export const FirebaseFunctionsPageTable: React.FC = () => {
     setSettings({ ...settings, projects: event.target.value as string[] });
   };
 
-  const projectSelect = loading ? (
-    <CircularProgress />
-  ) : error ? (
-    <Typography>
-      {`Error occured while loading available projects: ${error}`}
-    </Typography>
-  ) : (
-    <FormControl>
-      <InputLabel id="project-ids-label">Select projects</InputLabel>
-      <Select
-        open={projectsMenuOpen}
-        onOpen={() => setProjectsMenuOpen(true)}
-        onClose={() => setProjectsMenuOpen(false)}
-        style={{ minWidth: '150px' }}
-        labelId="project-ids-label"
-        id="project-ids"
-        multiple
-        renderValue={selected => (selected as string[]).join(', ')}
-        value={settings.projects}
-        onChange={handleChange}
-        input={<Input />}
-      >
-        {availableProjects?.map(name => (
-          <MenuItem key={name} value={name}>
-            <Checkbox checked={settings.projects.indexOf(name) > -1} />
-            <ListItemText primary={name} />
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
-  );
+  let projectSelect = null;
+
+  switch (true) {
+    case loading:
+      projectSelect = <CircularProgress />;
+      break;
+    case error:
+      projectSelect = (
+        <Typography>
+          {`Error occured while loading available projects: ${error}`}
+        </Typography>
+      );
+      break;
+    default:
+      projectSelect = (
+        <FormControl>
+          <InputLabel id="project-ids-label">Select projects</InputLabel>
+          <Select
+            open={projectsMenuOpen}
+            onOpen={() => setProjectsMenuOpen(true)}
+            onClose={() => setProjectsMenuOpen(false)}
+            style={{ minWidth: '150px' }}
+            labelId="project-ids-label"
+            id="project-ids"
+            multiple
+            renderValue={selected => (selected as string[]).join(', ')}
+            value={settings.projects}
+            onChange={handleChange}
+            input={<Input />}
+          >
+            {availableProjects?.map(name => (
+              <MenuItem key={name} value={name}>
+                <Checkbox checked={settings.projects.indexOf(name) > -1} />
+                <ListItemText primary={name} />
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      );
+  }
   return (
     <Grid container spacing={3} direction="column">
       <Grid item>{projectSelect}</Grid>
@@ -217,14 +226,21 @@ function getLocalizationObject(
     readonly error: Error | undefined;
   },
 ) {
-  const message =
-    settings.projects.length === 0
-      ? 'Select projects to fetch data'
-      : tableProps.loading
-      ? 'loading'
-      : tableProps.error
-      ? `error occured while loading data: ${tableProps.error}`
-      : undefined;
+  let message: string | undefined = undefined;
+
+  switch (true) {
+    case settings.projects.length === 0:
+      message = 'Select projects to fetch data';
+      break;
+    case tableProps.loading:
+      message = 'loading';
+      break;
+    case !!tableProps.error:
+      message = `error occured while loading data: ${tableProps.error}`;
+      break;
+    default:
+      break;
+  }
 
   return message
     ? {
