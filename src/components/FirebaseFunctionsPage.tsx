@@ -15,13 +15,7 @@
  */
 
 import React from 'react';
-import {
-  Page,
-  pageTheme,
-  Content,
-  ContentHeader,
-  SupportButton,
-} from '@backstage/core';
+import { ContentHeader, SupportButton } from '@backstage/core';
 
 import { FirebaseFunctionsPageTable } from './FirebaseFunctionsPageTable';
 import { ContextProvider } from './ContextProvider';
@@ -31,16 +25,12 @@ type Props = { entity: Entity };
 const FirebaseFunctionsPage: React.FC<Props> = ({ entity }: Props) => {
   return (
     <ContextProvider entity={entity}>
-      <Page theme={pageTheme.tool}>
-        <Content>
-          <ContentHeader title="Firebase Functions">
-            <SupportButton>
-              Plugin to show a project's firebase functions
-            </SupportButton>
-          </ContentHeader>
-          <FirebaseFunctionsPageTable />
-        </Content>
-      </Page>
+      <ContentHeader title="Firebase Functions">
+        <SupportButton>
+          Plugin to show a project's firebase functions
+        </SupportButton>
+      </ContentHeader>
+      <FirebaseFunctionsPageTable />
     </ContextProvider>
   );
 };
