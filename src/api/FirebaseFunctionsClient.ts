@@ -16,6 +16,7 @@
 
 import {
   FirebaseFunctionsApi,
+  GetFunctionArgs,
   ListFunctionsArgs,
 } from './firebaseFunctionsApi';
 import { FunctionData, FunctionDataDTO } from '../types';
@@ -41,6 +42,31 @@ async function fetch<T = any>(url: string, init?: RequestInit): Promise<T> {
 }
 
 export class FirebaseFunctionsClient implements FirebaseFunctionsApi {
+  async getFunction({ googleIdToken, functionSlug }: GetFunctionArgs) {
+    const url = `https://cloudfunctions.googleapis.com/v1/${functionSlug}`;
+    const init = {
+      method: 'get',
+    } as RequestInit;
+    init.headers = new Headers({
+      Authorization: `Bearer ${googleIdToken}`,
+    });
+    const resp = await fetch<FunctionDataDTO>(url, init);
+
+    return {
+      name: resp.name.split('/').pop() as string,
+      urlTrigger: resp.httpsTrigger!.url,
+      status: resp.status,
+      updateTime: resp.updateTime,
+      runtime: resp.runtime,
+      availableMemoryMb: resp.availableMemoryMb,
+      project: functionSlug.split('/').slice(-5)[0],
+      region: resp.name.split('/').slice(-3)[0],
+      labels: resp.labels,
+      envVariables: resp.environmentVariables,
+      fullName: resp.name,
+    };
+  }
+
   async listFunctions({ googleIdToken, projects }: ListFunctionsArgs) {
     let functionData: FunctionData[] = [];
     // Fetch data for each of selected projects

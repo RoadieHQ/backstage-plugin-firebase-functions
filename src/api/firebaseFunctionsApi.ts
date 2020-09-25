@@ -33,6 +33,14 @@ export type ListFunctionsType = (
   functionData: FunctionData[];
 }>;
 
+export type GetFunctionArgs = {
+  googleIdToken: string;
+  functionSlug: string;
+};
+
+export type GetFunctionType = (input: GetFunctionArgs) => Promise<FunctionData>;
+
 export type FirebaseFunctionsApi = {
   listFunctions: ListFunctionsType;
+  getFunction: GetFunctionType;
 };

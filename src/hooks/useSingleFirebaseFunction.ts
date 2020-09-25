@@ -18,31 +18,31 @@ import { useApi, googleAuthApiRef, errorApiRef } from '@backstage/core';
 import { FunctionData } from '../types';
 import { firebaseFunctionsApiRef } from '../api';
 
-export function useFirebaseFunctions(projects: string[]) {
+export function useSingleFirebaseFunction(functionSlug: string) {
   const googleAuth = useApi(googleAuthApiRef);
   const firebaseFunctionsApi = useApi(firebaseFunctionsApiRef);
   const errorApi = useApi(errorApiRef);
-  const { loading, value: functionsData, error, retry } = useAsyncRetry<
-    FunctionData[]
+  const { loading, value: functionData, error, retry } = useAsyncRetry<
+    FunctionData
   >(async () => {
     const googleIdToken = await googleAuth.getAccessToken([
       'https://www.googleapis.com/auth/cloud-platform',
     ]);
     try {
-      const firebaseFunctions = await firebaseFunctionsApi.listFunctions({
+      const ResponseData = await firebaseFunctionsApi.getFunction({
         googleIdToken,
-        projects,
+        functionSlug,
       });
-      return firebaseFunctions.functionData;
+      return ResponseData;
     } catch (err) {
       errorApi.post(err);
       throw new Error(err);
     }
-  }, [projects]);
+  });
 
   return {
     loading,
-    functionsData,
+    functionData,
     error,
     retry,
   };
