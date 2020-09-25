@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Typography,
   Box,
@@ -27,7 +27,6 @@ import {
   Input,
   FormControl,
   InputLabel,
-  CircularProgress,
   Checkbox,
   ListItemText,
   Grid,
@@ -181,7 +180,7 @@ export const FirebaseFunctionsPageTable: React.FC = () => {
     </FormControl>
   );
   return (
-    <Grid container spacing={3} direction="column">
+    <Grid container spacing={1} direction="column">
       <Grid item>{projectSelect}</Grid>
       <Grid item>
         <Table
