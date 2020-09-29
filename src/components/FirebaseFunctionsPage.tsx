@@ -20,6 +20,8 @@ import { ContentHeader, SupportButton } from '@backstage/core';
 import { FirebaseFunctionsPageTable } from './FirebaseFunctionsPageTable';
 import { ContextProvider } from './ContextProvider';
 import { Entity } from '@backstage/catalog-model';
+import { isMoreThanOneFirebaseFunction } from './Router';
+import { FirebaseFunctionDetailsPage } from './FirebaseFunctionDetailsPage';
 
 type Props = { entity: Entity };
 const FirebaseFunctionsPage: React.FC<Props> = ({ entity }: Props) => {
@@ -30,7 +32,11 @@ const FirebaseFunctionsPage: React.FC<Props> = ({ entity }: Props) => {
           Plugin to show a project's firebase functions
         </SupportButton>
       </ContentHeader>
-      <FirebaseFunctionsPageTable />
+      {isMoreThanOneFirebaseFunction(entity) ? (
+        <FirebaseFunctionsPageTable />
+      ) : (
+        <FirebaseFunctionDetailsPage />
+      )}
     </ContextProvider>
   );
 };
