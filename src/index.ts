@@ -16,5 +16,10 @@
 
 export * from './plugin';
 export * from './api';
-export { Router, isPluginApplicableToEntity } from './components/Router';
+export {
+  Router,
+  isPluginApplicableToEntity,
+  isMoreThanOneFirebaseFunction,
+  isOnlyOneFirebaseFunction,
+} from './components/Router';
 export { FirebaseFunctionWidget } from './components/FirebaseFunctionWidget';
