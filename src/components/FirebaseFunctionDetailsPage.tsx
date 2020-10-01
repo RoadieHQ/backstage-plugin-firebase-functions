@@ -16,44 +16,46 @@
 import React from 'react';
 import {
   Link,
-  TableContainer,
-  Card,
   LinearProgress,
-  Table as MuiTable,
-  TableBody,
-  TableCell,
-  TableRow,
   Typography,
   Grid,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from '@material-ui/core';
 import { InfoCard, StructuredMetadataTable } from '@backstage/core';
 import moment from 'moment';
 import { useFunctionIds } from '../hooks/useFunctionIds';
 import { useSingleFirebaseFunction } from '../hooks/useSingleFirebaseFunction';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 export const FirebaseFunctionDetailsPage: React.FC = () => {
   const { functions: whitelistedFunctions } = useFunctionIds();
-  const { loading, functionData } = useSingleFirebaseFunction(
+  const { loading, functionData, error } = useSingleFirebaseFunction(
     whitelistedFunctions[0],
   );
 
+  if (error) {
+    return <Typography>{error.message}</Typography>;
+  }
+
   return (
-    <TableContainer component={Card}>
+    <>
       {loading || !functionData ? (
         <LinearProgress />
       ) : (
-        <InfoCard
-          title={
-            <Link
-              href={`https://console.cloud.google.com/functions/details/${functionData.region}/${functionData.name}?project=${functionData.project}`}
-              target="_blank"
+        <Grid container spacing={1}>
+          <Grid item md={4}>
+            <InfoCard
+              title={
+                <Link
+                  href={`https://console.cloud.google.com/functions/details/${functionData.region}/${functionData.name}?project=${functionData.project}`}
+                  target="_blank"
+                >
+                  {functionData.name}
+                </Link>
+              }
             >
-              {functionData.name}
-            </Link>
-          }
-        >
-          <Grid container spacing={1}>
-            <Grid item md={4}>
               <StructuredMetadataTable
                 metadata={{
                   status: functionData.status,
@@ -61,7 +63,7 @@ export const FirebaseFunctionDetailsPage: React.FC = () => {
                   project: functionData.project,
                   region: functionData.region,
                   runtime: functionData.runtime,
-                  memory: functionData.availableMemoryMb,
+                  memory: `${functionData.availableMemoryMb} MB`,
                   logs: (
                     <Link
                       href={`https://console.cloud.google.com/logs/viewer?project=${functionData.project}&resource=cloud_function%2Ffunction_name%2F${functionData.name}%2Fregion%2F${functionData.region}`}
@@ -72,40 +74,38 @@ export const FirebaseFunctionDetailsPage: React.FC = () => {
                   ),
                 }}
               />
-            </Grid>
-            <Grid item md={4}>
-              <Typography>Env variables:</Typography>
-              <MuiTable size="small" aria-label="env-variables">
-                <TableBody>
-                  {functionData.envVariables
-                    ? Object.entries(functionData.envVariables).map(entry => (
-                        <TableRow key={entry[0]}>
-                          <TableCell>{entry[0]}</TableCell>
-                          <TableCell>{entry[1]}</TableCell>
-                        </TableRow>
-                      ))
-                    : 'no env variables found'}
-                </TableBody>
-              </MuiTable>
-            </Grid>
-            <Grid item md={4}>
-              <Typography>labels:</Typography>
-              <MuiTable size="small" aria-label="labels">
-                <TableBody>
-                  {functionData.envVariables
-                    ? Object.entries(functionData.labels).map(entry => (
-                        <TableRow key={entry[0]}>
-                          <TableCell>{entry[0]}</TableCell>
-                          <TableCell>{entry[1]}</TableCell>
-                        </TableRow>
-                      ))
-                    : 'no labels found'}
-                </TableBody>
-              </MuiTable>
-            </Grid>
+            </InfoCard>
           </Grid>
-        </InfoCard>
+          <Grid item md={4}>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography>Environmental Variables:</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <StructuredMetadataTable metadata={functionData.envVariables} />
+              </AccordionDetails>
+            </Accordion>
+          </Grid>
+          <Grid item md={4}>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography>Labels:</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <StructuredMetadataTable metadata={functionData.labels} />
+              </AccordionDetails>
+            </Accordion>
+          </Grid>
+        </Grid>
       )}
-    </TableContainer>
+    </>
   );
 };
