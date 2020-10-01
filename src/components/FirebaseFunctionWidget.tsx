@@ -19,7 +19,12 @@ import { InfoCard } from '@backstage/core';
 
 import { ContextProvider } from './ContextProvider';
 import { Entity } from '@backstage/catalog-model';
-import { Card, LinearProgress, TableContainer } from '@material-ui/core';
+import {
+  Card,
+  LinearProgress,
+  TableContainer,
+  Typography,
+} from '@material-ui/core';
 import { FirebaseFunctionDetailsCard } from './FirebaseFunctionDetailsCard';
 import { useFunctionIds } from '../hooks/useFunctionIds';
 import { useSingleFirebaseFunction } from '../hooks/useSingleFirebaseFunction';
@@ -27,19 +32,29 @@ import { useSingleFirebaseFunction } from '../hooks/useSingleFirebaseFunction';
 type Props = { entity: Entity };
 const FirebaseFunctionWidgetPage: React.FC = () => {
   const { functions: whitelistedFunctions } = useFunctionIds();
-  const { loading, functionData } = useSingleFirebaseFunction(
+  const { loading, functionData, error } = useSingleFirebaseFunction(
     whitelistedFunctions[0],
   );
 
+  if (error) {
+    return (
+      <TableContainer component={Card}>
+        <InfoCard title="Firebase Function Details">
+          <Typography>{error.message}</Typography>;
+        </InfoCard>
+      </TableContainer>
+    );
+  }
+
   return (
     <TableContainer component={Card}>
-      {loading || !functionData ? (
-        <LinearProgress />
-      ) : (
-        <InfoCard title="Firebase Function Details">
+      <InfoCard title="Firebase Function Details">
+        {loading || !functionData ? (
+          <LinearProgress />
+        ) : (
           <FirebaseFunctionDetailsCard firebaseFunction={functionData} />
-        </InfoCard>
-      )}
+        )}
+      </InfoCard>
     </TableContainer>
   );
 };

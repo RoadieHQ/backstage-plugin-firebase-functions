@@ -51,6 +51,15 @@ export const FirebaseFunctionDetailsCard: React.FC<Props> = ({
         ),
         status: firebaseFunction.status,
         'last modified': moment(firebaseFunction.updateTime).fromNow(),
+        project: firebaseFunction.project,
+        'link to logs': (
+          <Link
+            href={`https://console.cloud.google.com/logs/viewer?project=${firebaseFunction.project}&resource=cloud_function%2Ffunction_name%2F${firebaseFunction.name}%2Fregion%2F${firebaseFunction.region}`}
+            target="_blank"
+          >
+            view logs
+          </Link>
+        ),
       }}
     />
   );
