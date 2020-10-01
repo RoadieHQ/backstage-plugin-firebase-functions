@@ -1,6 +1,6 @@
 # Firebase Functions Plugin for Backstage
 
-![details in the Firebase Functions plugin for Backstage](https://raw.githubusercontent.com/RoadieHQ/backstage-plugin-github-pull-requests/master/docs/firebase-function-details.png)
+![details in the Firebase Functions plugin for Backstage](https://raw.githubusercontent.com/RoadieHQ/backstage-plugin-firebase-functions/master/docs/firebase-function-details.png)
 
 [https://roadie.io/backstage/plugins/firebase-functions](https://roadie.io/backstage/plugins/firebase-functions)
 
