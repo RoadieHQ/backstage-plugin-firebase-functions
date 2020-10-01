@@ -45,7 +45,7 @@ export const FirebaseFunctionDetailsPage: React.FC = () => {
         <LinearProgress />
       ) : (
         <Grid container spacing={1}>
-          <Grid item md={4}>
+          <Grid item md={6}>
             <InfoCard
               title={
                 <Link
@@ -76,33 +76,10 @@ export const FirebaseFunctionDetailsPage: React.FC = () => {
               />
             </InfoCard>
           </Grid>
-          <Grid item md={4}>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography>Environmental Variables:</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <StructuredMetadataTable metadata={functionData.envVariables} />
-              </AccordionDetails>
-            </Accordion>
-          </Grid>
-          <Grid item md={4}>
-            <Accordion>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography>Labels:</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <StructuredMetadataTable metadata={functionData.labels} />
-              </AccordionDetails>
-            </Accordion>
+          <Grid item md={6}>
+            <InfoCard title="Labels">
+              <StructuredMetadataTable metadata={functionData.labels} />
+            </InfoCard>
           </Grid>
         </Grid>
       )}
