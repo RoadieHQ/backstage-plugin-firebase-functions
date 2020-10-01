@@ -39,7 +39,7 @@ export { plugin as FirebaseFunctionsPlugin } from '@roadiehq/backstage-plugin-fi
 
 ## How to use Firebase-functions plugin in Backstage
 
-Firebase-functions plugin is a part of the Backstage sample app. To start using it for your component, you have to:
+To start using it for your component, you have to:
 
 1. add annotation to the yaml config file of a component:
 
