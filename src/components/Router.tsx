@@ -19,7 +19,7 @@ import { Routes, Route } from 'react-router-dom';
 import { rootRouteRef } from '../plugin';
 import FirebaseFunctionsPage from './FirebaseFunctionsPage';
 import { FIREBASE_FUNCTION_IDS } from '../hooks/useFunctionIds';
-import { WarningPanel } from '@backstage/core';
+import { MissingAnnotationEmptyState, WarningPanel } from '@backstage/core';
 
 export const isPluginApplicableToEntity = (entity: Entity) =>
   entity?.metadata.annotations?.[FIREBASE_FUNCTION_IDS];
@@ -43,9 +43,7 @@ export const isMoreThanOneFirebaseFunction = (entity: Entity) => {
 
 export const Router = ({ entity }: { entity: Entity }) =>
   !isPluginApplicableToEntity(entity) ? (
-    <WarningPanel title="Firebase functions plugin:">
-      <pre>{FIREBASE_FUNCTION_IDS}</pre> annotation is missing on the entity.
-    </WarningPanel>
+    <MissingAnnotationEmptyState annotation={FIREBASE_FUNCTION_IDS} />
   ) : (
     <Routes>
       <Route
