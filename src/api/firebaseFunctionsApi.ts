@@ -14,10 +14,12 @@
  * limitations under the License.
  */
 
-import { createApiRef } from '@backstage/core';
+import { ApiRef, createApiRef } from '@backstage/core';
 import { FunctionData } from '../types';
 
-export const firebaseFunctionsApiRef = createApiRef<FirebaseFunctionsApi>({
+export const firebaseFunctionsApiRef: ApiRef<FirebaseFunctionsApi> = createApiRef<
+  FirebaseFunctionsApi
+>({
   id: 'plugin.firebasefunctions.service',
   description: 'Used by the firebase functions plugin to make requests',
 });
