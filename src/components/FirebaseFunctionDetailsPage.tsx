@@ -14,20 +14,11 @@
  * limitations under the License.
  */
 import React from 'react';
-import {
-  Link,
-  LinearProgress,
-  Typography,
-  Grid,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-} from '@material-ui/core';
+import { Link, LinearProgress, Typography, Grid } from '@material-ui/core';
 import { InfoCard, StructuredMetadataTable } from '@backstage/core';
 import moment from 'moment';
 import { useFunctionIds } from '../hooks/useFunctionIds';
 import { useSingleFirebaseFunction } from '../hooks/useSingleFirebaseFunction';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 export const FirebaseFunctionDetailsPage: React.FC = () => {
   const { functions: whitelistedFunctions } = useFunctionIds();

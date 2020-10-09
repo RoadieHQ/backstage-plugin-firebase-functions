@@ -19,29 +19,31 @@ import {
   createPlugin,
   createRouteRef,
   createApiFactory,
+  BackstagePlugin,
+  AbsoluteRouteRef,
 } from '@backstage/core';
 import FirebaseFunctionsPage from './components/FirebaseFunctionsPage';
 import { Entity } from '@backstage/catalog-model';
 import { firebaseFunctionsApiRef, FirebaseFunctionsClient } from './api';
 
-export const standaloneRootRouteRef = createRouteRef({
+export const standaloneRootRouteRef: AbsoluteRouteRef = createRouteRef({
   path: '/firebase-functions',
   title: 'Firebase functions list',
 });
 
-export const rootRouteRef = createRouteRef({
+export const rootRouteRef: AbsoluteRouteRef = createRouteRef({
   path: '',
   title: 'Firebase functions list',
 });
 
-export const plugin = createPlugin({
+export const plugin: BackstagePlugin = createPlugin({
   id: 'firebase-functions',
   apis: [
     createApiFactory(firebaseFunctionsApiRef, new FirebaseFunctionsClient()),
   ],
 });
 
-export const pluginStandalone = createPlugin({
+export const pluginStandalone: BackstagePlugin = createPlugin({
   id: 'firebase-functions',
   register({ router }) {
     router.addRoute(standaloneRootRouteRef, () => (
