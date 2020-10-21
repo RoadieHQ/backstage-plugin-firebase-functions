@@ -26,7 +26,7 @@ yarn add @roadiehq/backstage-plugin-firebase-functions
 export { plugin as FirebaseFunctionsPlugin } from '@roadiehq/backstage-plugin-firebase-functions';
 ```
 
-3. Add plugin to the `entitytPage.tsx` source file:
+3. Add plugin to the `EntitytPage.tsx` source file:
 
 ```tsx
 // packages/app/src/components/catalog/EntityPage.tsx
@@ -35,6 +35,15 @@ export { plugin as FirebaseFunctionsPlugin } from '@roadiehq/backstage-plugin-fi
   title="Firebase Functions"
   element={<FirebaseFunctionsRouter entity={entity} />}
 />
+```
+
+4. Import the Router as FirebaseFunctionsRouter in EntityPage.tsx:
+
+```tsx
+// packages/app/src/components/catalog/EntityPage.tsx
+import {
+  Router as FirebaseFunctionsRouter
+} from '@roadiehq/backstage-plugin-firebase-functions';
 ```
 
 ## How to use Firebase-functions plugin in Backstage
