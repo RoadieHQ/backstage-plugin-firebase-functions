@@ -1,0 +1,15 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: backstage-plugin-firebase-functions
+  description: |
+    Backstage plugin to view Firebase Function.
+  annotations:
+    github.com/project-slug: roadiehq/backstage-plugin-firebase-functions
+  tags:
+    - plugin
+    - oss
+spec:
+  type: library
+  owner: group:roadie
+  lifecycle: experimental
