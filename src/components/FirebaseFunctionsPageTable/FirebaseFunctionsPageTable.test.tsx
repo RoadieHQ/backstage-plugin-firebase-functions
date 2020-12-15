@@ -57,7 +57,7 @@ describe('FirebaseFunctionsTable', () => {
       </ApiProvider>,
     );
     expect(
-      await rendered.findByText('Set project name to fetch data'),
+      await rendered.findByText('Select projects to fetch data'),
     ).toBeInTheDocument();
   });
 
@@ -69,7 +69,7 @@ describe('FirebaseFunctionsTable', () => {
     ]);
     (useSettings as any).mockReturnValue([
       {
-        projects: ['test-project'],
+        projects: ['backstage-test-project'],
         entity: getEntityMock(),
       } as State,
     ]);
@@ -93,6 +93,8 @@ function getMockedFunctionsData() {
   return [
     {
       name: 'helloMarek',
+      fullName:
+        'projects/backstage-test-project/locations/us-central1/functions/helloMarek',
       urlTrigger:
         'https://us-central1-backstage-test-project.cloudfunctions.net/helloMarek',
       status: 'ACTIVE',
@@ -114,6 +116,8 @@ function getMockedFunctionsData() {
     },
     {
       name: 'helloMarek10',
+      fullName:
+        'projects/backstage-test-project/locations/us-central1/functions/helloMarek10',
       urlTrigger:
         'https://us-central1-backstage-test-project.cloudfunctions.net/helloMarek10',
       status: 'ACTIVE',
