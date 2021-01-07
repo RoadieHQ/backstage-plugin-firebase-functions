@@ -16,7 +16,7 @@
 
 import { plugin } from './plugin';
 
-describe('aws-lambda', () => {
+describe('firebase-functions', () => {
   it('should export plugin', () => {
     expect(plugin).toBeDefined();
   });
