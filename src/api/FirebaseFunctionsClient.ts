@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import fetch from 'cross-fetch';
 import {
   FirebaseFunctionsApi,
   GetFunctionArgs,
@@ -35,8 +36,11 @@ class FetchError extends Error {
   }
 }
 
-async function fetch<T = any>(url: string, init?: RequestInit): Promise<T> {
-  const resp = await window.fetch(`${url}`, init);
+async function fetchWrapper<T = any>(
+  url: string,
+  init?: RequestInit,
+): Promise<T> {
+  const resp = await fetch(`${url}`, init);
   if (!resp.ok) throw await FetchError.forResponse(resp);
   return await resp.json();
 }
@@ -50,7 +54,7 @@ export class FirebaseFunctionsClient implements FirebaseFunctionsApi {
     init.headers = new Headers({
       Authorization: `Bearer ${googleIdToken}`,
     });
-    const resp = await fetch<FunctionDataDTO>(url, init);
+    const resp = await fetchWrapper<FunctionDataDTO>(url, init);
 
     return {
       name: resp.name.split('/').pop() as string,
@@ -87,7 +91,7 @@ export class FirebaseFunctionsClient implements FirebaseFunctionsApi {
         if (resp) {
           url = `${url}?pageToken=$${encodeURIComponent(resp.nextPageToken)}`;
         }
-        resp = await fetch<{
+        resp = await fetchWrapper<{
           functions: FunctionDataDTO[];
           nextPageToken: string;
         }>(url, init);
