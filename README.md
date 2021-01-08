@@ -11,7 +11,7 @@
 
 ## How to add firebase-functions project dependency to Backstage app
 
-If you have your own backstage application without this plugin, here it's how to add it:
+If you have your own Backstage application without this plugin, here's how to add it:
 
 1. In the `backstage/packages/app` project add the plugin as a `package.json` dependency:
 
@@ -26,7 +26,7 @@ yarn add @roadiehq/backstage-plugin-firebase-functions
 export { plugin as FirebaseFunctionsPlugin } from '@roadiehq/backstage-plugin-firebase-functions';
 ```
 
-3. Add plugin to the `EntitytPage.tsx` source file:
+3. Add plugin to the `EntityPage.tsx` source file:
 
 ```tsx
 // packages/app/src/components/catalog/EntityPage.tsx
@@ -37,7 +37,7 @@ export { plugin as FirebaseFunctionsPlugin } from '@roadiehq/backstage-plugin-fi
 />
 ```
 
-4. Import the Router as FirebaseFunctionsRouter in EntityPage.tsx:
+4. Import the Router as FirebaseFunctionsRouter in `EntityPage.tsx`:
 
 ```tsx
 // packages/app/src/components/catalog/EntityPage.tsx
@@ -46,7 +46,7 @@ import {
 } from '@roadiehq/backstage-plugin-firebase-functions';
 ```
 
-## How to use Firebase-functions plugin in Backstage
+## How to use Firebase Functions plugin in Backstage
 
 To start using it for your component, you have to:
 
@@ -61,10 +61,10 @@ cloud.google.com/function-ids: projects/<project-name>/locations/<region-name>/f
 You can clone the plugin repo into the `packages/` directory:
 
 ```sh
-git clone https://github.com/RoadieHQ/backstage-plugin-firebase-functions.git firebse-functions
+git clone https://github.com/RoadieHQ/backstage-plugin-firebase-functions.git firebase-functions
 ```
 
-and run `yarn` in the root backstage directory - it will create a symbolic link so the dependency will be provided from the source code instead of node_modules package.
+and run `yarn` in the root backstage directory - it will create a symbolic link so the dependency will be provided from the source code instead of `node_modules` package.
 
 ## Links
 
