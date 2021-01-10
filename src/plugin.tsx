@@ -23,8 +23,8 @@ import {
   AbsoluteRouteRef,
 } from '@backstage/core';
 import FirebaseFunctionsPage from './components/FirebaseFunctionsPage';
-import { Entity } from '@backstage/catalog-model';
 import { firebaseFunctionsApiRef, FirebaseFunctionsClient } from './api';
+import { entityMock } from './mocks/mocks';
 
 export const standaloneRootRouteRef: AbsoluteRouteRef = createRouteRef({
   path: '/firebase-functions',
@@ -47,65 +47,7 @@ export const pluginStandalone: BackstagePlugin = createPlugin({
   id: 'firebase-functions',
   register({ router }) {
     router.addRoute(standaloneRootRouteRef, () => (
-      <FirebaseFunctionsPage entity={getEntityMock()} />
+      <FirebaseFunctionsPage entity={entityMock} />
     ));
   },
 });
-
-export function getEntityMock(): Entity {
-  return {
-    apiVersion: 'backstage.io/v1alpha1',
-    kind: 'Component',
-    metadata: {
-      annotations: {
-        'backstage.io/managed-by-location':
-          'github:https://github.com/mcalus3/sample-service/blob/master/backstage.yaml',
-        'circleci.com/project-slug': 'RoadieHQ/sample-service',
-        'github.com/project-slug': 'RoadieHQ/sample-service',
-        'backstage.io/github-actions-id': 'RoadieHQ/sample-service',
-        'cloud.google.com/function-ids':
-          'projects/backstage-test-project/locations/us-central1/functions/helloMarek',
-      },
-      name: 'sample-service',
-      description:
-        'A service for testing Backstage functionality. For example, we can trigger errors\non the sample-service, these are sent to Sentry, then we can view them in the \nBackstage plugin for Sentry.\n',
-      uid: 'b47ae42c-2a18-41bb-b21b-9310adccb9f3',
-      etag: 'OGE4MzJiNWQtNzM0OC00ZmExLTgzNjItNjljZDlkZDNmMTY4',
-      generation: 1,
-    },
-    spec: {
-      type: 'service',
-      owner: 'david@roadie.io',
-      lifecycle: 'experimental',
-    },
-  };
-}
-
-export function getEntityMockMultipleFunctions(): Entity {
-  return {
-    apiVersion: 'backstage.io/v1alpha1',
-    kind: 'Component',
-    metadata: {
-      annotations: {
-        'backstage.io/managed-by-location':
-          'github:https://github.com/mcalus3/sample-service/blob/master/backstage.yaml',
-        'circleci.com/project-slug': 'RoadieHQ/sample-service',
-        'github.com/project-slug': 'RoadieHQ/sample-service',
-        'backstage.io/github-actions-id': 'RoadieHQ/sample-service',
-        'cloud.google.com/function-ids':
-          'projects/backstage-test-project/locations/us-central1/functions/helloMarek,projects/backstage-test-project/locations/us-central1/functions/helloWorld,projects/backstage-test-project2/locations/us-central1/functions/helloMarek,projects/backstage-test-project2/locations/us-central1/functions/helloWorld',
-      },
-      name: 'sample-service',
-      description:
-        'A service for testing Backstage functionality. For example, we can trigger errors\non the sample-service, these are sent to Sentry, then we can view them in the \nBackstage plugin for Sentry.\n',
-      uid: 'b47ae42c-2a18-41bb-b21b-9310adccb9f3',
-      etag: 'OGE4MzJiNWQtNzM0OC00ZmExLTgzNjItNjljZDlkZDNmMTY4',
-      generation: 1,
-    },
-    spec: {
-      type: 'service',
-      owner: 'david@roadie.io',
-      lifecycle: 'experimental',
-    },
-  };
-}
