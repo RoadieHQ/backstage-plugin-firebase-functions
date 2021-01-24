@@ -1115,13 +1115,13 @@
   dependencies:
     lodash "^4.17.15"
 
-"@backstage/core-api@^0.2.1", "@backstage/core-api@^0.2.7", "@backstage/core-api@^0.2.8":
-  version "0.2.8"
-  resolved "https://registry.yarnpkg.com/@backstage/core-api/-/core-api-0.2.8.tgz#bd0ca97709a2e99963fefc07162f029d0e2d4aaa"
-  integrity sha512-wB/Z9Zb1dLmMlWJubCAd2ScgKIpFMstPiThqcD0O110rtpVgeuToPAm7WgPsdPZxtVnk6proqgfM6dUJnwhI0A==
+"@backstage/core-api@^0.2.5":
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/@backstage/core-api/-/core-api-0.2.5.tgz#4866f2ac76fea7d5963af229c41d7d8205725a5b"
+  integrity sha512-0DGFywT3O+xqcirAepk4WsMVwsM1FB6uxxsNll4ix0Kdlpn/KISIZIoXD26IGW9IjP4sJUs0cugQsbHLir1/Hw==
   dependencies:
     "@backstage/config" "^0.1.2"
-    "@backstage/test-utils" "^0.1.6"
+    "@backstage/test-utils" "^0.1.5"
     "@backstage/theme" "^0.2.2"
     "@material-ui/core" "^4.11.0"
     "@material-ui/icons" "^4.9.1"
@@ -1133,13 +1133,13 @@
     react-use "^15.3.3"
     zen-observable "^0.8.15"
 
-"@backstage/core-api@^0.2.5":
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/@backstage/core-api/-/core-api-0.2.5.tgz#4866f2ac76fea7d5963af229c41d7d8205725a5b"
-  integrity sha512-0DGFywT3O+xqcirAepk4WsMVwsM1FB6uxxsNll4ix0Kdlpn/KISIZIoXD26IGW9IjP4sJUs0cugQsbHLir1/Hw==
+"@backstage/core-api@^0.2.7", "@backstage/core-api@^0.2.8":
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/@backstage/core-api/-/core-api-0.2.8.tgz#bd0ca97709a2e99963fefc07162f029d0e2d4aaa"
+  integrity sha512-wB/Z9Zb1dLmMlWJubCAd2ScgKIpFMstPiThqcD0O110rtpVgeuToPAm7WgPsdPZxtVnk6proqgfM6dUJnwhI0A==
   dependencies:
     "@backstage/config" "^0.1.2"
-    "@backstage/test-utils" "^0.1.5"
+    "@backstage/test-utils" "^0.1.6"
     "@backstage/theme" "^0.2.2"
     "@material-ui/core" "^4.11.0"
     "@material-ui/icons" "^4.9.1"
