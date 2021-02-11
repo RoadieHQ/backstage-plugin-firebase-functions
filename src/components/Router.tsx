@@ -16,12 +16,12 @@
 import React from 'react';
 import { Entity } from '@backstage/catalog-model';
 import { Routes, Route } from 'react-router-dom';
-import { rootRouteRef } from '../plugin';
+import { entityContentRouteRef } from '../plugin';
 import FirebaseFunctionsPage from './FirebaseFunctionsPage';
 import { FIREBASE_FUNCTION_IDS } from '../hooks/useFunctionIds';
 import { MissingAnnotationEmptyState } from '@backstage/core';
 
-export const isPluginApplicableToEntity = (entity: Entity) =>
+export const isFirebaseFunctionsAvailable = (entity: Entity) =>
   entity?.metadata.annotations?.[FIREBASE_FUNCTION_IDS];
 
 export const isOnlyOneFirebaseFunction = (entity: Entity) => {
@@ -42,12 +42,12 @@ export const isMoreThanOneFirebaseFunction = (entity: Entity) => {
 };
 
 export const Router = ({ entity }: { entity: Entity }) =>
-  !isPluginApplicableToEntity(entity) ? (
+  !isFirebaseFunctionsAvailable(entity) ? (
     <MissingAnnotationEmptyState annotation={FIREBASE_FUNCTION_IDS} />
   ) : (
     <Routes>
       <Route
-        path={`/${rootRouteRef.path}`}
+        path={`/${entityContentRouteRef.path}`}
         element={<FirebaseFunctionsPage entity={entity} />}
       />
     </Routes>

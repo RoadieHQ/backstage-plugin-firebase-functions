@@ -20,28 +20,49 @@ import {
   createRouteRef,
   createApiFactory,
   BackstagePlugin,
-  AbsoluteRouteRef,
+  createRoutableExtension,
+  createComponentExtension,
 } from '@backstage/core';
 import FirebaseFunctionsPage from './components/FirebaseFunctionsPage';
 import { firebaseFunctionsApiRef, FirebaseFunctionsClient } from './api';
 import { entityMock } from './mocks/mocks';
 
-export const standaloneRootRouteRef: AbsoluteRouteRef = createRouteRef({
+export const standaloneRootRouteRef: any = createRouteRef({
   path: '/firebase-functions',
   title: 'Firebase functions list',
 });
 
-export const rootRouteRef: AbsoluteRouteRef = createRouteRef({
-  path: '',
-  title: 'Firebase functions list',
+export const entityContentRouteRef: any = createRouteRef({
+  title: 'Firebase functions Entity Content',
 });
 
-export const plugin: BackstagePlugin = createPlugin({
+export const firebaseFunctionsPlugin: BackstagePlugin = createPlugin({
   id: 'firebase-functions',
   apis: [
     createApiFactory(firebaseFunctionsApiRef, new FirebaseFunctionsClient()),
   ],
+  routes: {
+    entityContent: entityContentRouteRef,
+  },
 });
+
+export const EntityFirebaseFunctionsContent = firebaseFunctionsPlugin.provide(
+  createRoutableExtension({
+    component: () => import('./components/Router').then(m => m.Router),
+    mountPoint: entityContentRouteRef,
+  }),
+);
+
+export const EntityFirebaseFunctionsCard = firebaseFunctionsPlugin.provide(
+  createComponentExtension({
+    component: {
+      lazy: () =>
+        import('./components/FirebaseFunctionDetailsCard').then(
+          m => m.FirebaseFunctionDetailsCard,
+        ),
+    },
+  }),
+);
 
 export const pluginStandalone: BackstagePlugin = createPlugin({
   id: 'firebase-functions',
