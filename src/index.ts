@@ -17,9 +17,21 @@
 export * from './plugin';
 export * from './api';
 export {
+  /**
+   * @deprecated since 0.3.0 composability API should be used
+   */
   Router,
-  isPluginApplicableToEntity,
+  /**
+   * @deprecated since 0.3.0 new name 'isFirebaseFunctionsAvailable' should be used
+   */
+  isFirebaseFunctionsAvailable as isPluginApplicableToEntity,
+  isFirebaseFunctionsAvailable,
   isMoreThanOneFirebaseFunction,
   isOnlyOneFirebaseFunction,
 } from './components/Router';
-export { FirebaseFunctionWidget } from './components/FirebaseFunctionWidget';
+export {
+  /**
+   * @deprecated since 0.3.0 composability API should be used
+   */
+  FirebaseFunctionWidget,
+} from './components/FirebaseFunctionWidget';

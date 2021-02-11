@@ -20,8 +20,6 @@ import { FunctionData } from '../types';
 import moment from 'moment';
 import { StructuredMetadataTable } from '@backstage/core';
 
-type Props = { firebaseFunction: FunctionData };
-
 const useStyles = makeStyles({
   externalLinkIcon: {
     fontSize: 'inherit',
@@ -31,8 +29,10 @@ const useStyles = makeStyles({
   },
 });
 
-export const FirebaseFunctionDetailsCard: React.FC<Props> = ({
+export const FirebaseFunctionDetailsCard = ({
   firebaseFunction,
+}: {
+  firebaseFunction: FunctionData;
 }) => {
   const classes = useStyles();
 
