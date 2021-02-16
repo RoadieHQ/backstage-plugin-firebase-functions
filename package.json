@@ -5,6 +5,12 @@
   "types": "src/index.ts",
   "license": "Apache-2.0",
   "private": false,
+  "homepage": "https://roadie.io/backstage/plugins/firebase-functions/",
+  "bugs": {
+    "url": "https://github.com/RoadieHQ/backstage-plugin-firebase-functions/issues",
+    "email": "support@roadie.io"
+  },
+  "repository": "github:RoadieHQ/backstage-plugin-firebase-functions",
   "publishConfig": {
     "access": "public",
     "main": "dist/index.esm.js",
