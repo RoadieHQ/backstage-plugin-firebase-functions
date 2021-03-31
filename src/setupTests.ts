@@ -15,5 +15,9 @@
  */
 
 import '@testing-library/jest-dom';
+import 'cross-fetch/polyfill';
 
 require('jest-fetch-mock').enableMocks();
+
+// @ts-ignore
+window.HTMLCanvasElement.prototype.getContext = () => {}

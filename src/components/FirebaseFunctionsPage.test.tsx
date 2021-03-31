@@ -15,10 +15,11 @@
  */
 
 import React from 'react';
-import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import { waitForElementToBeRemoved } from '@testing-library/react';
 import {
   googleAuthApiRef,
   errorApiRef,
+  configApiRef,
   ApiRegistry,
   ApiProvider,
 } from '@backstage/core';
@@ -30,7 +31,7 @@ import {
 } from '../mocks/mocks';
 import FirebaseFunctionsPage from './FirebaseFunctionsPage';
 import { rest } from 'msw';
-import { msw } from '@backstage/test-utils';
+import { msw, wrapInTestApp, renderWithEffects } from '@backstage/test-utils';
 import { setupServer } from 'msw/node';
 
 const errorApiMock = { post: jest.fn(), error$: jest.fn() };
@@ -38,11 +39,14 @@ const errorApiMock = { post: jest.fn(), error$: jest.fn() };
 const mockGoogleAuth = {
   getAccessToken: async () => 'test-token',
 };
-
+const mockConfig = {
+  getOptionalConfig: (_3: string) => undefined,
+};
 const apis = ApiRegistry.from([
   [googleAuthApiRef, mockGoogleAuth],
   [firebaseFunctionsApiRef, new FirebaseFunctionsClient()],
   [errorApiRef, errorApiMock],
+  [configApiRef, mockConfig],
 ]);
 
 describe('FirebaseFunctionsTable', () => {
@@ -59,22 +63,26 @@ describe('FirebaseFunctionsTable', () => {
   });
 
   it('should inform about project name not set and not call an api', async () => {
-    const rendered = render(
-      <ApiProvider apis={apis}>
-        <FirebaseFunctionsPage entity={entityMockMultipleFunctions} />
-      </ApiProvider>,
-    );
+    const rendered = await renderWithEffects(
+        wrapInTestApp(
+          <ApiProvider apis={apis}>
+            <FirebaseFunctionsPage entity={entityMockMultipleFunctions} />
+          </ApiProvider>
+    ));
     expect(
       await rendered.findByText('Select projects to fetch data'),
     ).toBeInTheDocument();
   });
 
   it('should render function details', async () => {
-    const rendered = render(
-      <ApiProvider apis={apis}>
-        <FirebaseFunctionsPage entity={entityMock} />
-      </ApiProvider>,
-    );
+    const rendered = await renderWithEffects(
+        wrapInTestApp(
+          <ApiProvider apis={apis}>
+            <FirebaseFunctionsPage entity={entityMock} />
+          </ApiProvider>
+    ));
+
+    // @ts-ignore Typings are broken for the testing-library version used within test-utils.
     await waitForElementToBeRemoved(() => rendered.getByRole('progressbar'));
     expect(await rendered.findByText('helloMarek')).toBeInTheDocument();
   });

@@ -24,23 +24,6 @@ import { MissingAnnotationEmptyState } from '@backstage/core';
 export const isFirebaseFunctionsAvailable = (entity: Entity) =>
   entity?.metadata.annotations?.[FIREBASE_FUNCTION_IDS];
 
-export const isOnlyOneFirebaseFunction = (entity: Entity) => {
-  const rawProjects =
-    entity?.metadata.annotations?.[FIREBASE_FUNCTION_IDS] ?? undefined;
-  if (!rawProjects) {
-    return false;
-  }
-  const functions = rawProjects.split(',').map(p => p.trim());
-  return functions.length === 1;
-};
-
-export const isMoreThanOneFirebaseFunction = (entity: Entity) => {
-  const rawProjects =
-    entity?.metadata.annotations?.[FIREBASE_FUNCTION_IDS] ?? '';
-  const functions = rawProjects.split(',').map(p => p.trim());
-  return functions.length > 1;
-};
-
 export const Router = ({ entity }: { entity: Entity }) =>
   !isFirebaseFunctionsAvailable(entity) ? (
     <MissingAnnotationEmptyState annotation={FIREBASE_FUNCTION_IDS} />
