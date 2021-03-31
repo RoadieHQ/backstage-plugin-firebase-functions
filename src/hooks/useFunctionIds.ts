@@ -23,6 +23,6 @@ export const useFunctionIds = () => {
   const rawProjects =
     entity?.metadata.annotations?.[FIREBASE_FUNCTION_IDS] ?? '';
   const functions = rawProjects.split(',').map(p => p.trim());
-  const availableProjects = [...new Set(functions.map(f => f.split('/')[1]))];
+  const availableProjects = [...new Set(functions.map(f => f.split('/')[1]))].filter(it => it);
   return { availableProjects, functions };
 };

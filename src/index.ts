@@ -26,9 +26,8 @@ export {
    */
   isFirebaseFunctionsAvailable as isPluginApplicableToEntity,
   isFirebaseFunctionsAvailable,
-  isMoreThanOneFirebaseFunction,
-  isOnlyOneFirebaseFunction,
 } from './components/Router';
+export { isMoreThanOneFirebaseFunction, isOnlyOneFirebaseFunction }from './components/util'
 export {
   /**
    * @deprecated since 0.3.0 composability API should be used

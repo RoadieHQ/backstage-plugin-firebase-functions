@@ -20,7 +20,7 @@ import { ContentHeader, SupportButton } from '@backstage/core';
 import { FirebaseFunctionsPageTable } from './FirebaseFunctionsPageTable';
 import { ContextProvider } from './ContextProvider';
 import { Entity } from '@backstage/catalog-model';
-import { isMoreThanOneFirebaseFunction } from './Router';
+import { isMoreThanOneFirebaseFunction } from './util';
 import { FirebaseFunctionDetailsPage } from './FirebaseFunctionDetailsPage';
 
 type Props = { entity: Entity };
