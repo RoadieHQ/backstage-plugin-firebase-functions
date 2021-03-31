@@ -15,7 +15,7 @@
  */
 
 import React from 'react';
-import { render, waitForElementToBeRemoved } from '@testing-library/react';
+import { waitForElementToBeRemoved } from '@testing-library/react';
 import {
   googleAuthApiRef,
   errorApiRef,
@@ -81,6 +81,8 @@ describe('FirebaseFunctionsTable', () => {
             <FirebaseFunctionsPage entity={entityMock} />
           </ApiProvider>
     ));
+
+    // @ts-ignore Typings are broken for the testing-library version used within test-utils.
     await waitForElementToBeRemoved(() => rendered.getByRole('progressbar'));
     expect(await rendered.findByText('helloMarek')).toBeInTheDocument();
   });
