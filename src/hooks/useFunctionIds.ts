@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import { useEntity } from "@backstage/plugin-catalog-react";
+
 export const FIREBASE_FUNCTION_IDS = 'cloud.google.com/function-ids';
 
 export const useFunctionIds = () => {
