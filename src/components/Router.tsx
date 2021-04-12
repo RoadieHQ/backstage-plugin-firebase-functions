@@ -20,18 +20,27 @@ import { entityContentRouteRef } from '../plugin';
 import FirebaseFunctionsPage from './FirebaseFunctionsPage';
 import { FIREBASE_FUNCTION_IDS } from '../hooks/useFunctionIds';
 import { MissingAnnotationEmptyState } from '@backstage/core';
+import {useEntity} from "@backstage/plugin-catalog-react";
 
 export const isFirebaseFunctionsAvailable = (entity: Entity) =>
   entity?.metadata.annotations?.[FIREBASE_FUNCTION_IDS];
 
-export const Router = ({ entity }: { entity: Entity }) =>
-  !isFirebaseFunctionsAvailable(entity) ? (
-    <MissingAnnotationEmptyState annotation={FIREBASE_FUNCTION_IDS} />
+type Props = {
+  /** @deprecated The entity is now grabbed from context instead */
+  entity?: Entity;
+};
+
+export const Router = (_props: Props) => {
+  const { entity } = useEntity()
+
+  return !isFirebaseFunctionsAvailable(entity) ? (
+      <MissingAnnotationEmptyState annotation={FIREBASE_FUNCTION_IDS} />
   ) : (
-    <Routes>
-      <Route
-        path={`/${entityContentRouteRef.path}`}
-        element={<FirebaseFunctionsPage entity={entity} />}
-      />
-    </Routes>
+      <Routes>
+        <Route
+            path={`/${entityContentRouteRef.path}`}
+            element={<FirebaseFunctionsPage entity={entity} />}
+        />
+      </Routes>
   );
+};
