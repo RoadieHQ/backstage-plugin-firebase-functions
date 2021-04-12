@@ -29,10 +29,11 @@ import {
   entityMockMultipleFunctions,
   functionDataMock,
 } from '../mocks/mocks';
-import FirebaseFunctionsPage from './FirebaseFunctionsPage';
 import { rest } from 'msw';
 import { msw, wrapInTestApp, renderWithEffects } from '@backstage/test-utils';
 import { setupServer } from 'msw/node';
+import {Router} from "./Router";
+import { EntityProvider } from '@backstage/plugin-catalog-react';
 
 const errorApiMock = { post: jest.fn(), error$: jest.fn() };
 
@@ -66,7 +67,9 @@ describe('FirebaseFunctionsTable', () => {
     const rendered = await renderWithEffects(
         wrapInTestApp(
           <ApiProvider apis={apis}>
-            <FirebaseFunctionsPage entity={entityMockMultipleFunctions} />
+            <EntityProvider entity={entityMockMultipleFunctions}>
+              <Router />
+            </EntityProvider>
           </ApiProvider>
     ));
     expect(
@@ -78,7 +81,9 @@ describe('FirebaseFunctionsTable', () => {
     const rendered = await renderWithEffects(
         wrapInTestApp(
           <ApiProvider apis={apis}>
-            <FirebaseFunctionsPage entity={entityMock} />
+            <EntityProvider entity={entityMock}>
+              <Router />
+            </EntityProvider>
           </ApiProvider>
     ));
 

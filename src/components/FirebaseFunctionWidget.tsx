@@ -28,8 +28,13 @@ import {
 import { FirebaseFunctionDetailsCard } from './FirebaseFunctionDetailsCard';
 import { useFunctionIds } from '../hooks/useFunctionIds';
 import { useSingleFirebaseFunction } from '../hooks/useSingleFirebaseFunction';
+import {useEntity} from "@backstage/plugin-catalog-react";
 
-type Props = { entity: Entity };
+type Props = {
+  /** @deprecated The entity is now grabbed from context instead */
+  entity?: Entity;
+};
+
 const FirebaseFunctionWidgetPage: React.FC = () => {
   const { functions: whitelistedFunctions } = useFunctionIds();
   const { loading, functionData, error } = useSingleFirebaseFunction(
@@ -59,8 +64,11 @@ const FirebaseFunctionWidgetPage: React.FC = () => {
   );
 };
 
-export const FirebaseFunctionWidget: React.FC<Props> = ({ entity }: Props) => (
-  <ContextProvider entity={entity}>
-    <FirebaseFunctionWidgetPage />
-  </ContextProvider>
-);
+export const FirebaseFunctionWidget: React.FC<Props> = (_props: Props) => {
+  const { entity } = useEntity();
+  return (
+      <ContextProvider entity={entity}>
+        <FirebaseFunctionWidgetPage />
+      </ContextProvider>
+  );
+};
