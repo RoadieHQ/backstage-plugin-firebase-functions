@@ -39,17 +39,17 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "6.0.0-beta.0",
-    "react-use": "^15.3.6"
+    "react-use": "^17.2.4"
   },
   "devDependencies": {
     "@backstage/cli": "^0.6.9",
     "@backstage/dev-utils": "^0.1.13",
     "@backstage/test-utils": "^0.1.10",
-    "@spotify/prettier-config": "^8.0.0",
+    "@spotify/prettier-config": "^10.0.0",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "jest-fetch-mock": "^3.0.3",
-    "msw": "^0.25.0"
+    "msw": "^0.28.2"
   },
   "files": [
     "dist"
