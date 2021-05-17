@@ -57,8 +57,8 @@ export const EntityFirebaseFunctionsCard = firebaseFunctionsPlugin.provide(
   createComponentExtension({
     component: {
       lazy: () =>
-        import('./components/FirebaseFunctionDetailsCard').then(
-          m => m.FirebaseFunctionDetailsCard,
+        import('./components/FirebaseFunctionWidget').then(
+          m => m.FirebaseFunctionWidget,
         ),
     },
   }),

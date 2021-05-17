@@ -23,7 +23,7 @@ import { MissingAnnotationEmptyState } from '@backstage/core';
 import {useEntity} from "@backstage/plugin-catalog-react";
 
 export const isFirebaseFunctionsAvailable = (entity: Entity) =>
-  entity?.metadata.annotations?.[FIREBASE_FUNCTION_IDS];
+  Boolean(entity?.metadata.annotations?.[FIREBASE_FUNCTION_IDS]);
 
 type Props = {
   /** @deprecated The entity is now grabbed from context instead */
