@@ -50,10 +50,10 @@ export class FirebaseFunctionsClient implements FirebaseFunctionsApi {
     const url = `https://cloudfunctions.googleapis.com/v1/${functionSlug}`;
     const init = {
       method: 'get',
+      headers: {
+        Authorization:`Bearer ${googleIdToken}`,
+      }
     } as RequestInit;
-    init.headers = new Headers({
-      Authorization: `Bearer ${googleIdToken}`,
-    });
     const resp = await fetchWrapper<FunctionDataDTO>(url, init);
 
     return {
@@ -80,10 +80,10 @@ export class FirebaseFunctionsClient implements FirebaseFunctionsApi {
       let url = `https://cloudfunctions.googleapis.com/v1/projects/${project}/locations/-/functions?pageSize=50`;
       const init = {
         method: 'get',
+        headers: {
+          Authorization:`Bearer ${googleIdToken}`,
+        }
       } as RequestInit;
-      init.headers = new Headers({
-        Authorization: `Bearer ${googleIdToken}`,
-      });
       const fetchedData = [] as FunctionDataDTO[];
       let resp = null;
       do {

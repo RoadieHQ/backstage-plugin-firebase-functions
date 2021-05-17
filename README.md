@@ -30,20 +30,53 @@ export { plugin as FirebaseFunctionsPlugin } from '@roadiehq/backstage-plugin-fi
 
 ```tsx
 // packages/app/src/components/catalog/EntityPage.tsx
-<EntityPageLayout.Content
-  path="/firebase-functions/*"
-  title="Firebase Functions"
-  element={<FirebaseFunctionsRouter entity={entity} />}
-/>
+import {
+  EntityFirebaseFunctionsContent
+} from '@roadiehq/backstage-plugin-firebase-functions';
+
+...
+
+const serviceEntityPage = (
+<EntityLayoutWrapper>
+  ...
+    <EntityLayout.Route 
+      path="/firebase-functions"
+      title="Firebase Functions">
+      <EntityFirebaseFunctionsContent />
+    </EntityLayout.Route>
+  ...
+</EntityLayoutWrapper>
+);
 ```
 
-4. Import the Router as FirebaseFunctionsRouter in `EntityPage.tsx`:
+## Widget setup
+1. You must install plugin by following the steps above to add widget to your Overview
 
-```tsx
+2. Add widget to your Overview tab:
+
+```ts
 // packages/app/src/components/catalog/EntityPage.tsx
 import {
-  Router as FirebaseFunctionsRouter
+  isFirebaseFunctionsAvailable,
+  EntityFirebaseFunctionsCard
 } from '@roadiehq/backstage-plugin-firebase-functions';
+
+...
+
+const overviewContent = (
+  <Grid container spacing={3}>
+    ...
+    <EntitySwitch>
+      <EntitySwitch.Case if={isFirebaseFunctionsAvailable}>
+        <Grid item md={6}>
+          <EntityFirebaseFunctionsCard />
+        </Grid>
+      </EntitySwitch.Case>
+    </EntitySwitch>
+    ...
+  </Grid>
+);
+
 ```
 
 ## How to use Firebase Functions plugin in Backstage
