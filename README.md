@@ -19,14 +19,7 @@ If you have your own Backstage application without this plugin, here's how to ad
 yarn add @roadiehq/backstage-plugin-firebase-functions
 ```
 
-2. Add plugin to the list of plugins:
-
-```ts
-// packages/app/src/plugins.ts
-export { plugin as FirebaseFunctionsPlugin } from '@roadiehq/backstage-plugin-firebase-functions';
-```
-
-3. Add plugin to the `EntityPage.tsx` source file:
+2. Add plugin to the `EntityPage.tsx` source file:
 
 ```tsx
 // packages/app/src/components/catalog/EntityPage.tsx
