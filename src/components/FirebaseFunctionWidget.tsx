@@ -15,7 +15,7 @@
  */
 
 import React from 'react';
-import { InfoCard } from '@backstage/core';
+import { InfoCard } from '@backstage/core-components';
 
 import { ContextProvider } from './ContextProvider';
 import { Entity } from '@backstage/catalog-model';

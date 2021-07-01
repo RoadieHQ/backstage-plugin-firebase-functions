@@ -19,7 +19,7 @@ import { Routes, Route } from 'react-router-dom';
 import { entityContentRouteRef } from '../plugin';
 import FirebaseFunctionsPage from './FirebaseFunctionsPage';
 import { FIREBASE_FUNCTION_IDS } from '../hooks/useFunctionIds';
-import { MissingAnnotationEmptyState } from '@backstage/core';
+import { MissingAnnotationEmptyState } from '@backstage/core-components';
 import {useEntity} from "@backstage/plugin-catalog-react";
 
 export const isFirebaseFunctionsAvailable = (entity: Entity) =>

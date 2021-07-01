@@ -31,7 +31,7 @@ import {
   ListItemText,
   Grid,
 } from '@material-ui/core';
-import { Table, TableColumn } from '@backstage/core';
+import { Table, TableColumn } from '@backstage/core-components';
 import { useFirebaseFunctions } from '../../hooks/useFirebaseFunctions';
 import { FunctionData } from '../../types';
 import moment from 'moment';

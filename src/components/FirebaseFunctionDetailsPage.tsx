@@ -15,7 +15,7 @@
  */
 import React from 'react';
 import { Link, LinearProgress, Typography, Grid } from '@material-ui/core';
-import { InfoCard, StructuredMetadataTable } from '@backstage/core';
+import { InfoCard, StructuredMetadataTable } from '@backstage/core-components';
 import moment from 'moment';
 import { useFunctionIds } from '../hooks/useFunctionIds';
 import { useSingleFirebaseFunction } from '../hooks/useSingleFirebaseFunction';

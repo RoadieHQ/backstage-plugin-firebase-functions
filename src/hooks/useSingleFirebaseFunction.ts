@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { useAsyncRetry } from 'react-use';
-import { useApi, googleAuthApiRef, errorApiRef } from '@backstage/core';
+import { useApi, googleAuthApiRef, errorApiRef } from '@backstage/core-plugin-api';
 import { FunctionData } from '../types';
 import { firebaseFunctionsApiRef } from '../api';
 
