@@ -15,7 +15,7 @@
  */
 
 import React from 'react';
-import { ContentHeader, SupportButton } from '@backstage/core';
+import { ContentHeader, SupportButton } from '@backstage/core-components';
 
 import { FirebaseFunctionsPageTable } from './FirebaseFunctionsPageTable';
 import { ContextProvider } from './ContextProvider';

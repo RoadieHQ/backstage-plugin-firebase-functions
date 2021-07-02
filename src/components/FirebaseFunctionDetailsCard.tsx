@@ -18,7 +18,7 @@ import { Link, makeStyles } from '@material-ui/core';
 import ExternalLinkIcon from '@material-ui/icons/Launch';
 import { FunctionData } from '../types';
 import moment from 'moment';
-import { StructuredMetadataTable } from '@backstage/core';
+import { StructuredMetadataTable } from '@backstage/core-components';
 
 const useStyles = makeStyles({
   externalLinkIcon: {

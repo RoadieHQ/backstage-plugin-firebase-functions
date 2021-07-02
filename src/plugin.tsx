@@ -14,29 +14,20 @@
  * limitations under the License.
  */
 
-import React from 'react';
 import {
   createPlugin,
   createRouteRef,
   createApiFactory,
-  BackstagePlugin,
   createRoutableExtension,
   createComponentExtension,
-} from '@backstage/core';
-import FirebaseFunctionsPage from './components/FirebaseFunctionsPage';
+} from '@backstage/core-plugin-api';
 import { firebaseFunctionsApiRef, FirebaseFunctionsClient } from './api';
-import { entityMock } from './mocks/mocks';
-
-export const standaloneRootRouteRef: any = createRouteRef({
-  path: '/firebase-functions',
-  title: 'Firebase functions list',
-});
 
 export const entityContentRouteRef: any = createRouteRef({
   title: 'Firebase functions Entity Content',
 });
 
-export const firebaseFunctionsPlugin: BackstagePlugin = createPlugin({
+export const firebaseFunctionsPlugin = createPlugin({
   id: 'firebase-functions',
   apis: [
     createApiFactory(firebaseFunctionsApiRef, new FirebaseFunctionsClient()),
@@ -63,12 +54,3 @@ export const EntityFirebaseFunctionsCard = firebaseFunctionsPlugin.provide(
     },
   }),
 );
-
-export const pluginStandalone: BackstagePlugin = createPlugin({
-  id: 'firebase-functions',
-  register({ router }) {
-    router.addRoute(standaloneRootRouteRef, () => (
-      <FirebaseFunctionsPage entity={entityMock} />
-    ));
-  },
-});

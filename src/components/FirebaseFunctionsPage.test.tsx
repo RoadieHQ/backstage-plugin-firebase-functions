@@ -20,9 +20,11 @@ import {
   googleAuthApiRef,
   errorApiRef,
   configApiRef,
+} from '@backstage/core-plugin-api';
+import {
   ApiRegistry,
   ApiProvider,
-} from '@backstage/core';
+} from '@backstage/core-app-api';
 import { firebaseFunctionsApiRef, FirebaseFunctionsClient } from '../api';
 import {
   entityMock,

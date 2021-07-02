@@ -1,6 +1,6 @@
 {
   "name": "@roadiehq/backstage-plugin-firebase-functions",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "src/index.ts",
   "types": "src/index.ts",
   "license": "Apache-2.0",
@@ -27,9 +27,11 @@
     "clean": "backstage-cli clean"
   },
   "dependencies": {
-    "@backstage/catalog-model": "^0.8.0",
-    "@backstage/core": "^0.7.11",
-    "@backstage/plugin-catalog-react": "^0.2.0",
+    "@backstage/catalog-model": "^0.8.4",
+    "@backstage/core-app-api": "^0.1.3",
+    "@backstage/core-components": "^0.1.3",
+    "@backstage/core-plugin-api": "^0.1.3",
+    "@backstage/plugin-catalog-react": "^0.2.4",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.45",
@@ -42,8 +44,8 @@
     "react-use": "^17.2.4"
   },
   "devDependencies": {
-    "@backstage/cli": "^0.6.12",
-    "@backstage/dev-utils": "^0.1.15",
+    "@backstage/cli": "^0.7.2",
+    "@backstage/dev-utils": "^0.2.0",
     "@backstage/test-utils": "^0.1.12",
     "@spotify/prettier-config": "^10.0.0",
     "@testing-library/jest-dom": "^5.12.0",

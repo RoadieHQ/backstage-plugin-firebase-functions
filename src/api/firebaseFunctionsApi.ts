@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { ApiRef, createApiRef } from '@backstage/core';
+import { ApiRef, createApiRef } from '@backstage/core-plugin-api';
 import { FunctionData } from '../types';
 
 export const firebaseFunctionsApiRef: ApiRef<FirebaseFunctionsApi> = createApiRef<

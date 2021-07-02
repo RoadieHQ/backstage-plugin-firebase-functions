@@ -15,14 +15,6 @@
  */
 
 import { createDevApp } from '@backstage/dev-utils';
-import { firebaseFunctionsApiRef, FirebaseFunctionsClient } from '../src/api';
-import { pluginStandalone } from '../src/plugin';
+import { firebaseFunctionsPlugin } from '../src/plugin';
 
-createDevApp()
-  .registerPlugin(pluginStandalone)
-  .registerApi({
-    deps: {},
-    factory: () => new FirebaseFunctionsClient(),
-    api: firebaseFunctionsApiRef,
-  })
-  .render();
+createDevApp().registerPlugin(firebaseFunctionsPlugin).render();
