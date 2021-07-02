@@ -13,23 +13,15 @@
 
 If you have your own Backstage application without this plugin, here's how to add it:
 
-1. In the `backstage/packages/app` project add the plugin as a `package.json` dependency:
+1. In the [packages/app](https://github.com/backstage/backstage/blob/master/packages/app/) directory of your backstage instance, add the plugin as a package.json dependency:
 
 ```bash
 yarn add @roadiehq/backstage-plugin-firebase-functions
 ```
 
-2. Add plugin to the list of plugins:
-
-```ts
-// packages/app/src/plugins.ts
-export { plugin as FirebaseFunctionsPlugin } from '@roadiehq/backstage-plugin-firebase-functions';
-```
-
-3. Add plugin to the `EntityPage.tsx` source file:
+2. import the plugin to the [entityPage.tsx](https://github.com/backstage/backstage/blob/master/packages/app/src/components/catalog/EntityPage.tsx) source file:
 
 ```tsx
-// packages/app/src/components/catalog/EntityPage.tsx
 import {
   EntityFirebaseFunctionsContent
 } from '@roadiehq/backstage-plugin-firebase-functions';
@@ -52,10 +44,10 @@ const serviceEntityPage = (
 ## Widget setup
 1. You must install plugin by following the steps above to add widget to your Overview
 
-2. Add widget to your Overview tab:
+
+2. Add a widget to the overview tab to the [entityPage.tsx](https://github.com/backstage/backstage/blob/master/packages/app/src/components/catalog/EntityPage.tsx) source file:
 
 ```ts
-// packages/app/src/components/catalog/EntityPage.tsx
 import {
   isFirebaseFunctionsAvailable,
   EntityFirebaseFunctionsCard
@@ -91,13 +83,14 @@ cloud.google.com/function-ids: projects/<project-name>/locations/<region-name>/f
 
 ## Develop plugin locally
 
-You can clone the plugin repo into the `packages/` directory:
+You can clone the plugin repo into the `backstage/plugins/` directory:
+
 
 ```sh
 git clone https://github.com/RoadieHQ/backstage-plugin-firebase-functions.git firebase-functions
 ```
 
-and run `yarn` in the root backstage directory - it will create a symbolic link so the dependency will be provided from the source code instead of `node_modules` package.
+and run `yarn install` in the root backstage directory - it will create a symbolic link so the dependency will be provided from the source code instead of `node_modules` package.
 
 ## Links
 
