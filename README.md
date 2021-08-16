@@ -4,6 +4,11 @@
 
 [https://roadie.io/backstage/plugins/firebase-functions](https://roadie.io/backstage/plugins/firebase-functions)
 
+## Repository migration notice
+
+In order to make testing and deployment of our plugins easier we are migrating all Roadie plugins to a monorepo at https://github.com/RoadieHQ/roadie-backstage-plugins.
+The plugins will still be published to the same place on NPM and will have the same package names so nothing should change for consumers of these plugins.
+
 ## Features
 
 - Display firebase functions details
