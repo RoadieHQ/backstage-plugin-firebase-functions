@@ -1,3 +1,7 @@
+# DEPRECATION NOTICE
+
+Roadie is no longer actively maintaining this plugin. If you're intrested in becoming a maintainer please create an issue and we'll take things from there.
+
 # Firebase Functions Plugin for Backstage
 
 ![details in the Firebase Functions plugin for Backstage](https://raw.githubusercontent.com/RoadieHQ/backstage-plugin-firebase-functions/master/docs/firebase-function-details.png)
